@@ -1,7 +1,13 @@
 {
-  "name": "Codefolio",
+  "name": "codefolio-mch",
+  "private": true,
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "author": "Marek Chodacki <mchodacki@hotmail.com> (https://marekchodacki.pl)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marekchodacki/codefolio-mch.git"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
