@@ -1,81 +1,154 @@
 ---
-import Header from "../components/Header.astro";
-import Sidebar from "../components/Sidebar.astro";
+import Header from '../components/Header.astro'
+import Sidebar from '../components/Sidebar.astro'
 ---
 
-
-<!DOCTYPE html>
-<html
->
-  <Header title="Sam Bernstein" />
+<!doctype html>
+<html>
+  <Header title="Marek Chodacki | Programista Fullstack" />
   <body>
     <div class="content">
-      <Sidebar selectedItem="home" />
+      <Sidebar selectedItem="strona-glowna" />
       <nav class="main">
         <div class="container">
           <main class="fold-content-container">
             <div class="fold-content">
-              <h1>Hi, I'm Sam.<br />I build things for the web.</h1>
+              <h1>
+                Trzy kompetencje.<br />Jeden człowiek.<br />Zero komplikacji.
+              </h1>
               <p class="lead">
-                Experienced backend developer and cloud architect. A proactive team member dedicated to continuous learning, problem-solving, and aiding teammates in achieving quicker outcomes.
+                Łączę w sobie kompetencje app i&nbsp;web developera, eksperta
+                WordPress i&nbsp;WooCommerce oraz&nbsp;specjalisty SEO. Tworzę
+                rozwiązania od&nbsp;backendu po&nbsp;frontend, dbając
+                o&nbsp;wydajność i&nbsp;optymalizację każdej witryny.
+              </p>
+              <p class="lead">
+                Potrafię rozwijać zarówno dedykowane aplikacje w Vue, Nuxt czy
+                Astro, jak&nbsp;i&nbsp;projektować skalowalne systemy
+                w&nbsp;oparciu o PHP i&nbsp; MySQL. Rozumiem projektowanie nie
+                tylko od strony kodu, ale&nbsp;i&nbsp;widoczności w&nbsp;sieci.
+              </p>
+              <p class="lead">
+                Zamiast trzech osób - masz jednego partnera. Zbuduję dla Ciebie
+                stronę www lub sklep internetowy, zajmę się ich optymalizacją
+                pod wyszukiwarkę Google i&nbsp;zadbam o&nbsp;techniczne
+                szczegóły, które zwiększą Twoją sprzedaż.
+              </p>
+              <p class="lead">
+                Dzięki temu Twój biznes urośnie szybciej,<br />a&nbsp;Ty
+                oszczędzisz czas i&nbsp;pieniądze.
               </p>
             </div>
-            <a href="mailto:sam@overview.co.il	" class="button w-button">Contact</a>
+            <a href="mailto:mchodacki@hotmail.com" class="button w-button"
+              >Wyślij mail</a
+            >
           </main>
           <div class="projects-section">
-            <!-- Software Development -->
-            <a href="/software-development" class="projects-container">
+            <!-- Aplikacje webowe -->
+            <a href="/aplikacje-webowe" class="projects-container">
               <div class="single-projects-category">
                 <div class="projects-category-image-container">
-                  <img src="./assets/browser.svg" loading="lazy" alt="" class="projects-category-image" />
+                  <img
+                    src="./assets/browser.svg"
+                    loading="lazy"
+                    alt="Tworzenie aplikacji webowych"
+                    class="projects-category-image"
+                  />
                 </div>
               </div>
               <div class="single-projects-content">
-                <h4>Software Development</h4>
+                <h4>Aplikacje webowe</h4>
                 <div class="tech-tools-container">
-                  <div class="mini-label-white gray-color">Technologies &amp; tools</div>
+                  <div class="mini-label-white gray-color">
+                    Technologie i&nbsp;narzędzia
+                  </div>
                   <div class="chips-container chips-container-small-width">
-                    <div class="single-chip small-chip">React</div>
-                    <div class="single-chip small-chip">Next.js</div>
-                    <div class="single-chip small-chip">Node.js</div>
-                    <div class="single-chip small-chip">MongoDB</div>
-                    <div class="single-chip small-chip">Heroku</div>
-                    <div class="single-chip small-chip">RabbitMQ</div>
-                    <div class="single-chip small-chip">Express.js</div>
+                    <div class="single-chip small-chip">Vue</div>
+                    <div class="single-chip small-chip">Nuxt</div>
+                    <div class="single-chip small-chip">Astro</div>
+                    <div class="single-chip small-chip">Node</div>
                     <div class="single-chip small-chip">TypeScript</div>
-                    <div class="single-chip small-chip">NestJS</div>
-                    <div class="single-chip small-chip">Angular</div>
-                    <div class="single-chip small-chip">Postgres</div>
-                    <div class="single-chip small-chip">Linode</div>
+                    <div class="single-chip small-chip">Supabase</div>
+                    <div class="single-chip small-chip">REST API</div>
+                    <div class="single-chip small-chip">Tailwind CSS</div>
+                    <div class="single-chip small-chip">Git</div>
+                    <div class="single-chip small-chip">CI/CD</div>
                   </div>
                 </div>
               </div>
             </a>
-            <!-- DevOps & Cloud -->
-            <a href="/devops" class="projects-container">
+            <!-- Strony i sklepy internetowe -->
+            <a href="/strony-i-sklepy" class="projects-container">
               <div class="single-projects-category">
                 <div class="projects-category-image-container devops-img">
-                  <img src="./assets/database.svg" loading="lazy" alt="" class="projects-category-image" />
+                  <img
+                    src="./assets/database.svg"
+                    loading="lazy"
+                    alt="Projektowanie stron i sklepów internetowych"
+                    class="projects-category-image"
+                  />
                 </div>
               </div>
               <div class="single-projects-content">
-                <h4>DevOps &amp;&nbsp;Cloud</h4>
+                <h4>Strony i&nbsp;Sklepy internetowe</h4>
                 <div class="tech-tools-container">
-                  <div class="mini-label-white gray-color">Technologies &amp; tools</div>
+                  <div class="mini-label-white gray-color">
+                    Technologie i&nbsp;narzędzia
+                  </div>
                   <div class="chips-container chips-container-small-width">
-                    <div class="single-chip small-chip">Terraform</div>
-                    <div class="single-chip small-chip">Azure</div>
-                    <div class="single-chip small-chip">AWS</div>
-                    <div class="single-chip small-chip">Docker</div>
-                    <div class="single-chip small-chip">Kubernetes</div>
-                    <div class="single-chip small-chip">GitLab CI/CD</div>
-                    <div class="single-chip small-chip">RKE</div>
-                    <div class="single-chip small-chip">Node.js</div>
-                    <div class="single-chip small-chip">RabbitMQ</div>
-                    <div class="single-chip small-chip">Linux</div>
-                    <div class="single-chip small-chip">Bash</div>
-                    <div class="single-chip small-chip">Grafana</div>
-                    <div class="single-chip small-chip">Prometheus</div>
+                    <div class="single-chip small-chip">WordPress</div>
+                    <div class="single-chip small-chip">WooCommerce</div>
+                    <div class="single-chip small-chip">PHP</div>
+                    <div class="single-chip small-chip">MySQL</div>
+                    <div class="single-chip small-chip">
+                      Modyfikacje motywów
+                    </div>
+                    <div class="single-chip small-chip">
+                      Integracje płatności
+                    </div>
+                    <div class="single-chip small-chip">
+                      Integracje kurierskie
+                    </div>
+                    <div class="single-chip small-chip">
+                      Optymalizacja wydajności
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <!-- SEO i Pozycjonowanie -->
+            <a href="/seo-pozycjonowanie" class="projects-container">
+              <div class="single-projects-category">
+                <div class="projects-category-image-container">
+                  <img
+                    src="./assets/database.svg"
+                    loading="lazy"
+                    alt="Optymalizacja SEO i Pozycjonowanie stron internetowych"
+                    class="projects-category-image"
+                  />
+                </div>
+              </div>
+              <div class="single-projects-content">
+                <h4>SEO i&nbsp;Pozycjonowanie</h4>
+                <div class="tech-tools-container">
+                  <div class="mini-label-white gray-color">
+                    Strategie i&nbsp;narzędzia
+                  </div>
+                  <div class="chips-container chips-container-small-width">
+                    <div class="single-chip small-chip">SEO On‑Page</div>
+                    <div class="single-chip small-chip">SEO Techniczne</div>
+                    <div class="single-chip small-chip">Audyt SEO</div>
+                    <div class="single-chip small-chip">
+                      Optymalizacja treści
+                    </div>
+                    <div class="single-chip small-chip">Link Building</div>
+                    <div class="single-chip small-chip">Google Analytics</div>
+                    <div class="single-chip small-chip">
+                      Google Search Console
+                    </div>
+                    <div class="single-chip small-chip">Ahrefs</div>
+                    <div class="single-chip small-chip">Semrush</div>
+                    <div class="single-chip small-chip">PageSpeed Insights</div>
                   </div>
                 </div>
               </div>

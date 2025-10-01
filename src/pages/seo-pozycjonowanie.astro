@@ -1,0 +1,126 @@
+---
+import Header from '../components/Header.astro'
+import Project from '../components/Project.astro'
+import Sidebar from '../components/Sidebar.astro'
+const projects = [
+  {
+    title: '2021-2025 | Projekty Klientów',
+    desc: [
+      'Optymalizacja SEO jako integralna część projektów stron i sklepów internetowych',
+      'Audyty techniczne SEO i wdrażanie najlepszych praktyk on-site podczas developmentu',
+      'Optymalizacja wydajności, struktury i treści witryn zgodnie z wytycznymi Google',
+      'Doradztwo SEO dla Klientów w zakresie długofalowej widoczności',
+      'Zaawansowana analiza i raportowanie danych SEO',
+    ],
+    tech: [
+      'Google Analytics',
+      'Google Search Console',
+      'Screaming Frog',
+      'PageSpeed Insights',
+      'Schema.org',
+      'Yoast SEO / Rank Math',
+      'Excel & Google Sheets',
+    ],
+  },
+  {
+    title: '2019-2021 | K2 Precise S.A. | Warszawa',
+    desc: [
+      'Tworzenie i optymalizacja treści blogowych zgodnie z najlepszymi praktykami SEO',
+      'Opracowanie treści i metadanych dla materiałów wideo: tytuły, opisy, transkrypcje/napisy',
+      'Kompleksowa optymalizacja on-page: tytuły, nagłówki, metadane, struktura treści',
+      'Zapewnienie spójności językowej i wizerunkowej w komunikacji wielokanałowej',
+    ],
+    tech: [
+      'YouTube Studio',
+      'Google Analytics',
+      'Google Search Console',
+      'Google Keyword Planner',
+      'Ahrefs',
+      'Screaming Frog',
+    ],
+  },
+  {
+    title: '2017-2019 | CKP | Lublin',
+    desc: [
+      'Prowadzenie szkoleń z zakresu tworzenia, optymalizacji SEO i pozycjonowania stron internetowych w ramach projektów unijnych',
+      'Współpraca przy optymalizacji on-site i off-site strony firmowej',
+      'Wsparcie działań promocyjnych i marketingowych',
+      'Prowadzenie warsztatów analitycznych',
+      'Przygotowanie i prowadzenie materiałów dydaktycznych',
+    ],
+    tech: [
+      'Google Analytics',
+      'Google Search Console',
+      'Google Keyword Planner',
+      'Excel & Google Sheets',
+      'PowerPoint',
+    ],
+  },
+  {
+    title: '2015-2017 | Performance Media | Lublin',
+    desc: [
+      'Planowanie i wdrażanie strategii SEO dla stron internetowych klientów agencji',
+      'Audyty techniczne SEO: analiza treści, wydajności i struktury witryn',
+      'Raportowanie i analiza efektywności kampanii reklamowych',
+      'Współpraca z zespołem IT przy rozwoju dedykowanego oprogramowania',
+      'Automatyzacja procesów poprzez tworzenie skryptów PHP',
+      'Projektowanie dedykowanych arkuszy z automatyczną konsolidacją danych z wielu źródeł, co znacząco skracało czas analizy i raportowania, a także codziennej pracy',
+    ],
+    tech: [
+      'Google Analytics',
+      'Google Search Console',
+      'Ahrefs',
+      'Majestic SEO',
+      'SEMStorm',
+      'Screaming Frog',
+      'PHP',
+      'Excel & Google Sheets',
+    ],
+  },
+]
+---
+
+<!doctype html>
+<html>
+  <Header
+    title="Optymalizacja SEO i pozycjonowanie stron www | Marek Chodacki"
+  />
+  <body>
+    <div class="content">
+      <Sidebar selectedItem="seo-pozycjonowanie" />
+      <nav class="main">
+        <div class="container">
+          <div class="back-nav-container">
+            <a href="/" class="back-nav-button w-inline-block"
+              ><img
+                src="/assets/back.svg"
+                loading="lazy"
+                alt=""
+                class="back-nav-img"
+              />
+              <div>Wstecz</div></a
+            >
+          </div>
+          <div class="content-container">
+            <h1>SEO i Pozycjonowanie</h1>
+            <section class="items-container">
+              <div class="resouce-items">
+                {
+                  projects.map((project) => (
+                    <Project
+                      title={project.title}
+                      desc={project.desc}
+                      tech={project.tech}
+                    />
+                  ))
+                }
+              </div>
+            </section>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!--[if lte IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+  </body>
+</html>

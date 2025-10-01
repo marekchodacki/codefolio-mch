@@ -1,5 +1,5 @@
 ---
-const { selectedItem } = Astro.props;
+const { selectedItem } = Astro.props
 ---
 
 <aside
@@ -15,14 +15,14 @@ const { selectedItem } = Astro.props;
     <a href="/" class="w-nav-brand" aria-label="home">
       <div class="niv-data">
         <img
-          src="/assets/sam.jpg"
+          src="/assets/marek.jpg"
           loading="eager"
-          alt="Profile picture"
+          alt="Marek Chodacki"
           class="niv-image"
         />
         <div>
-          <div class="label-white">Sam Bernstein</div>
-          <div class="label-gray">Software Engineer</div>
+          <div class="label-white">Marek Chodacki</div>
+          <div class="label-gray">Programista Fullstack</div>
         </div>
       </div>
     </a>
@@ -31,61 +31,59 @@ const { selectedItem } = Astro.props;
       <a
         href="/"
         class={`nav-link-container w-inline-block ${
-          selectedItem === 'home' ? 'w--current' : ''
+          selectedItem === 'strona-glowna' ? 'w--current' : ''
         }`}
       >
         <img
           src="/assets/home.svg"
           loading="eager"
-          alt=""
+          alt="Strona główna"
           class="nav-link-image"
         />
-        <div>Home</div>
+        <div>Strona główna</div>
       </a>
       <a
-        href="/software-development"
+        href="/aplikacje-webowe"
         class={`nav-link-container w-inline-block ${
-          selectedItem === 'software-development' ? 'w--current' : ''
+          selectedItem === 'aplikacje-webowe' ? 'w--current' : ''
         }`}
-        aria-current={
-          selectedItem === 'software-development' ? 'page' : undefined
-        }
+        aria-current={selectedItem === 'aplikacje-webowe' ? 'page' : undefined}
       >
         <img
           src="/assets/code.svg"
           loading="eager"
-          alt=""
+          alt="Tworzenie aplikacji webowych"
           class="nav-link-image"
         />
-        <div>Software development</div>
+        <div>Aplikacje webowe</div>
       </a>
       <a
-        href="/devops"
+        href="/strony-sklepy"
         class={`nav-link-container w-inline-block ${
-          selectedItem === 'devops' ? 'w--current' : ''
+          selectedItem === 'strony-sklepy' ? 'w--current' : ''
         }`}
       >
         <img
           src="/assets/dns.svg"
           loading="eager"
-          alt=""
+          alt="Projektowanie stron i sklepów internetowych"
           class="nav-link-image"
         />
-        <div>DevOps</div>
+        <div>Strony i&nbsp;sklepy</div>
       </a>
       <a
-        href="/personal-projects"
+        href="/seo-pozycjonowanie"
         class={`nav-link-container w-inline-block ${
-          selectedItem === 'personal-projects' ? 'w--current' : ''
+          selectedItem === 'seo-pozycjonowanie' ? 'w--current' : ''
         }`}
       >
         <img
           src="/assets/favorite.svg"
           loading="eager"
-          alt=""
+          alt="Optymalizacja SEO i Pozycjonowanie stron internetowych"
           class="nav-link-image"
         />
-        <div>Personal projects</div>
+        <div>SEO i&nbsp;pozycjonowanie</div>
       </a>
     </nav>
 
@@ -99,23 +97,23 @@ const { selectedItem } = Astro.props;
       <img
         src="/assets/menu.svg"
         loading="eager"
-        alt=""
+        alt="Menu"
         class="navbar-icon"
       />
     </div>
   </div>
 
   <script>
-    import { setupNav } from '../scripts/nav.js';
-    
-    let cleanup;
+    import { setupNav } from '../scripts/nav.js'
+
+    let cleanup
     document.addEventListener('astro:page-load', () => {
-      if (cleanup) cleanup();
-      cleanup = setupNav();
-    });
+      if (cleanup) cleanup()
+      cleanup = setupNav()
+    })
 
     document.addEventListener('astro:before-swap', () => {
-      if (cleanup) cleanup();
-    });
+      if (cleanup) cleanup()
+    })
   </script>
 </aside>
