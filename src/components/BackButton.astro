@@ -1,0 +1,37 @@
+<div id="back-button" class="back-nav-container">
+  <a href="/" class="back-nav-button w-inline-block"
+    ><img
+      src="/assets/icons/btn_back.svg"
+      loading="lazy"
+      alt="Wstecz"
+      class="back-nav-img"
+    />
+    <div>Wstecz</div></a
+  >
+</div>
+
+<script>
+  import { navigate } from 'astro:transitions/client'
+
+  function handleBackClick(event: Event): void {
+    event.preventDefault()
+
+    const isInternalReferrer = document.referrer.includes(window.location.host)
+
+    if (window.history.length > 1 && isInternalReferrer) {
+      window.history.back()
+    } else {
+      navigate('/')
+    }
+  }
+
+  function setupBackButton(): void {
+    const backButton = document.getElementById('back-button') as HTMLElement
+    if (backButton) {
+      backButton.addEventListener('click', handleBackClick)
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', setupBackButton)
+  document.addEventListener('astro:page-load', setupBackButton)
+</script>

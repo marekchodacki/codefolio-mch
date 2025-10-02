@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro'
 import Project from '../components/Project.astro'
 import Sidebar from '../components/Sidebar.astro'
+import BackButton from '../components/BackButton.astro'
 const projects = [
   {
     title: '2025 | Winnica Koniczynowe Wzgórze | Puławy',
@@ -111,15 +112,7 @@ const projects = [
       <nav class="main">
         <div class="container">
           <div class="back-nav-container">
-            <a href="/" class="back-nav-button w-inline-block"
-              ><img
-                src="/assets/icons/btn_back.svg"
-                loading="lazy"
-                alt="Wstecz"
-                class="back-nav-img"
-              />
-              <div>Wstecz</div></a
-            >
+            <BackButton />
           </div>
           <div class="content-container">
             <h1>Strony i Sklepy</h1>
