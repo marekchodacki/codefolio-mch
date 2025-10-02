@@ -1,0 +1,70 @@
+---
+import Header from '../components/Header.astro'
+import Project from '../components/Project.astro'
+import Sidebar from '../components/Sidebar.astro'
+import BackButton from '../components/BackButton.astro'
+const projects = [
+  {
+    title: '2025 | Codefolio MCh',
+    desc: ['Prace w toku'],
+    tech: ['Astro', 'JavaScript', 'CSS'],
+  },
+  {
+    title: '2024 | iChip WebApp | Demo',
+    desc: [
+      'Projekt i wdrożenie prototypu aplikacji webowej dla serwisu urządzeń mobilnych',
+      'Zaawansowany formularz z walidacją do składania zleceń napraw online',
+      'Dynamiczny cennik z wyszukiwarką modeli urządzeń',
+      'Interaktywna mapa lokalizacji serwisu ułatwiająca klientom dotarcie do firmy',
+      'Responsywny interfejs użytkownika zbudowany z myślą o UX i szybkości działania',
+      'Integracja z EmailJS do obsługi formularza zgłoszeniowego bez potrzeby backendu',
+    ],
+    tech: [
+      'Vue 3',
+      'TypeScript',
+      'Vite',
+      'Vue Router',
+      'Tailwind',
+      'Vee-Validate',
+      'Zod',
+      'EmailJS',
+      'Vercel',
+    ],
+  },
+]
+---
+
+<!doctype html>
+<html>
+  <Header title="Tworzenie aplikacji webowych | Marek Chodacki" />
+  <body>
+    <div class="content">
+      <Sidebar selectedItem="aplikacje-webowe" />
+      <nav class="main">
+        <div class="container">
+          <div class="back-nav-container">
+            <BackButton />
+          </div>
+          <div class="content-container">
+            <h1>Aplikacje webowe</h1>
+            <section class="items-container">
+              <div class="resouce-items">
+                {
+                  projects.map((project) => (
+                    <Project
+                      title={project.title}
+                      desc={project.desc}
+                      tech={project.tech}
+                    />
+                  ))
+                }
+              </div>
+            </section>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!--[if lte IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+  </body>
+</html>
