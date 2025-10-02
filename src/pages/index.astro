@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro'
 import Sidebar from '../components/Sidebar.astro'
+import Signature from '../components/Signature.astro'
 ---
 
 <!doctype html>
@@ -41,9 +42,13 @@ import Sidebar from '../components/Sidebar.astro'
                 sprzedaż.
               </p>
               <p class="lead right bold-600">
-                Dzięki temu Twój biznes urośnie szybciej,<br />a&nbsp;Ty
-                oszczędzisz czas i&nbsp;pieniądze.
+                Dzięki temu Twój biznes urośnie szybciej,<br
+                  class="mobile-hidden"
+                />a&nbsp;Ty oszczędzisz czas i&nbsp;pieniądze.
               </p>
+            </div>
+            <div class="svg-wrapper">
+              <Signature />
             </div>
             <div class="contact-buttons">
               <a href="tel:+48506788894" class="button w-button">

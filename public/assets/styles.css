@@ -120,6 +120,11 @@
   
   /* Z-index */
   --z-nav: 1000;
+
+  /* Animations */
+  --draw-duration: 8s;
+  --fill-duration: 1500ms;
+  --delay-duration: 3250ms;
 }
 
 /* ============================================
@@ -582,7 +587,7 @@ img {
    CONTENT SECTIONS
    ============================================ */
 .fold-content {
-  margin-bottom: var(--spacing-4xl);
+  margin-bottom: var(--spacing-xl);
 }
 
 .content-container {
@@ -682,6 +687,37 @@ img {
   display: flex;
 }
 
+.svg-wrapper {
+  max-width: 580px;
+  padding-bottom: var(--spacing-2xl);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+.logo-path {
+  stroke-width: 0.2;
+  stroke: var(--color-text-primary);
+  fill: var(--color-text-primary);
+  fill-opacity: 0;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation:
+    revealFill var(--fill-duration) ease forwards var(--delay-duration),
+    draw var(--draw-duration) linear forwards;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes revealFill {
+  to { fill-opacity: 1; }
+}
+
 /* ============================================
    MEDIA QUERIES - TABLET (max-width: 991px)
    ============================================ */
@@ -749,7 +785,12 @@ img {
 
   /* Content - Tablet */
   .fold-content {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .contact-buttons {
+    justify-content: end;
+    max-width: var(--container-max-width-md);
   }
 }
 
