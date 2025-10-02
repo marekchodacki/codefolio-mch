@@ -24,16 +24,19 @@
   --color-bg-tertiary: #2b2b2b;
   --color-bg-elevated: #202020;
   --color-bg-white: #fff;
+  --color-bg-current: #3b075d; /*#1e446c;*/
   
   /* Colors - Border */
   --color-border-primary: #353535;
   --color-border-secondary: #363636;
   --color-border-transparent: rgba(0, 0, 0, 0);
+  --color-border-current: #6600a9;
   
   /* Colors - Text */
-  --color-text-primary: #fff;
+  --color-text-primary: #ddd;
   --color-text-secondary: #a8a8a8;
   --color-text-dark: #333;
+  --color-text-h3: #925fcd;
   
   /* Colors - Accent */
   --color-accent-blue: #3898ec;
@@ -60,8 +63,9 @@
   --font-size-lg: 1.125rem;      /* 18px */
   --font-size-xl: 1.5rem;        /* 24px */
   --font-size-2xl: 2rem;         /* 32px */
-  --font-size-3xl: 3.375rem;     /* 54px */
-  --font-size-4xl: 3.625rem;     /* 58px */
+  --font-size-3xl: 2.5rem;      /* 36px */
+  --font-size-4xl: 3rem;     /* 54px */
+  --font-size-5xl: 3.625rem;     /* 58px */
   
   /* Typography - Line Heights */
   --line-height-tight: 1.25rem;  /* 20px */
@@ -70,8 +74,9 @@
   --line-height-relaxed: 1.625rem; /* 26px */
   --line-height-loose: 2.625rem; /* 42px */
   --line-height-xl: 3rem;        /* 48px */
-  --line-height-2xl: 4rem;       /* 64px */
-  --line-height-3xl: 4.5rem;     /* 72px */
+  --line-height-2xl: 3.5rem;     /* 56px */
+  --line-height-3xl: 4rem;       /* 64px */
+  --line-height-4xl: 4.5rem;     /* 72px */
   
   /* Spacing */
   --spacing-xs: 0.5rem;          /* 8px */
@@ -94,7 +99,7 @@
   /* Dimensions */
   --size-avatar: 3rem;           /* 48px */
   --size-icon-sm: 1.125rem;      /* 18px */
-  --size-icon-md: 1.5rem;        /* 24px */
+  --size-icon-md: 1.4rem;        /* 24px */
   --size-icon-lg: 2rem;          /* 32px */
   --size-image-sm: 4rem;         /* 64px */
   --size-image-md: 5.125rem;     /* 82px */
@@ -151,14 +156,25 @@ h1 {
   margin-bottom: var(--spacing-lg);
   font-size: var(--font-size-4xl);
   font-weight: 300;
-  line-height: var(--line-height-3xl);
+  line-height: var(--line-height-2xl);
+}
+
+h1 .line, h3 .line {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
+
+h1 .line.right .underline {
+  display: inline-block;
+  margin-bottom: var(--spacing-md);
+  border-bottom: 2px solid #ddd;
 }
 
 h3 {
-  color: var(--color-text-primary);
+  color: var(--color-text-h3);
   margin-top: 0;
   margin-bottom: var(--spacing-sm);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-xl);
   font-weight: 400;
   line-height: var(--line-height-loose);
 }
@@ -175,15 +191,18 @@ h4 {
 p {
   color: var(--color-text-secondary);
   margin-top: 0;
-  margin-bottom: 0.625rem; /* 10px - specific value from original */
+  padding-bottom: var(--spacing-md);
   font-size: var(--font-size-md);
   line-height: var(--line-height-relaxed);
 }
 
 ul {
-  margin-top: 0;
+  margin-top: 0.625rem;
   margin-bottom: 0.625rem; /* 10px - specific value from original */
   padding-left: 2.5rem; /* 40px - specific value from original */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* ============================================
@@ -241,6 +260,23 @@ img {
 
 .w-richtext ul {
   overflow: hidden;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.bold-600 {
+  font-weight: 600;
 }
 
 /* ============================================
@@ -380,13 +416,17 @@ img {
 
 .nav-link-container.w--current {
   color: var(--color-text-primary);
-  background-color: var(--color-bg-tertiary);
-  border-color: var(--color-border-primary);
+  background-color: var(--color-bg-current);
+  border-color: var(--color-border-current);
 }
 
 .nav-link-image {
   width: var(--size-icon-md);
   opacity: 0.48;
+}
+
+.nav-link-container.w--current .nav-link-image {
+  opacity: 0.75;
 }
 
 .navbar-icon {
@@ -480,18 +520,33 @@ img {
   color: var(--color-text-primary);
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border-secondary);
-  border-right-color: var(--color-border-primary);
+  /* border-right-color: var(--color-border-primary); */
   border-radius: var(--radius-sm);
   padding: var(--spacing-sm) 1.25rem; /* 12px 20px */
   font-size: var(--font-size-base);
   font-weight: 500;
   line-height: var(--line-height-relaxed);
   transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
 }
 
 .button:hover {
-  background-color: var(--color-bg-elevated);
-  box-shadow: 0 0.125rem 0.25rem var(--color-overlay-shadow); /* 0 2px 4px */
+  background-color: var(--color-bg-current); /*elevated */
+  border-color: var(--color-border-current);
+  /* box-shadow: 0 0.125rem 0.25rem var(--color-overlay-shadow); 0 2px 4px */
+}
+
+.button .icon {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+  display: inline-block;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: var(--spacing-md);
 }
 
 /* ============================================
@@ -571,6 +626,11 @@ img {
   display: flex;
 }
 
+.projects-container:hover .projects-category-image-container {
+  background-color: var(--color-bg-current);
+  border-color: var(--color-border-current);
+}
+
 .single-projects-category {
   display: flex;
 }
@@ -586,12 +646,12 @@ img {
   min-width: var(--size-image-xl);
   backdrop-filter: blur(4px);
   background-color: var(--color-overlay-chip);
-  border: 1px #000;
+  border: 1px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   justify-content: center;
   align-items: center;
   display: flex;
-  box-shadow: 0 1px 1px var(--color-overlay-glow), 0 -1px 1px var(--color-overlay-glow);
+  /* box-shadow: 0 1px 1px var(--color-overlay-glow), 0 -1px 1px var(--color-overlay-glow); */
 }
 
 .projects-category-image-container.devops-img {
@@ -705,7 +765,11 @@ img {
   /* Typography - Mobile */
   h1 {
     font-size: var(--font-size-3xl);
-    line-height: var(--line-height-2xl);
+    line-height: var(--line-height-loose);
+  }
+
+  h3 .line:nth-child(2) {
+    line-height: 1.5rem;
   }
 
   h4 {
@@ -766,5 +830,14 @@ img {
   .projects-category-image {
     width: var(--size-image-sm);
     height: var(--size-image-sm);
+  }
+
+  .single-chip {
+    padding: 0.25rem var(--spacing-xs); /* 4px 8px */
+    font-size: var(--font-size-sm);
+  }
+
+  .mobile-hidden {
+    display: none;
   }
 }

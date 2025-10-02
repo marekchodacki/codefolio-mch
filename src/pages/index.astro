@@ -14,36 +14,55 @@ import Sidebar from '../components/Sidebar.astro'
           <main class="fold-content-container">
             <div class="fold-content">
               <h1>
-                Trzy kompetencje.<br />Jeden człowiek.<br />Zero komplikacji.
+                <span class="line">Trzy kompetencje.</span>
+                <span class="line center">Jeden człowiek.</span>
+                <span class="line right">
+                  <span class="underline bold-500">Zero komplikacji.</span>
+                </span>
               </h1>
-              <p class="lead">
+              <p class="lead mobile-hidden">
                 Łączę w&nbsp;sobie kompetencje App i&nbsp;Web Developera,
                 Eksperta WordPress i&nbsp;WooCommerce oraz&nbsp;Specjalisty SEO.
                 Tworzę rozwiązania od&nbsp;backendu po&nbsp;frontend, dbając
                 o&nbsp;wydajność i&nbsp;optymalizację każdej witryny.
               </p>
-              <p class="lead">
+              <p class="lead center mobile-hidden">
                 Potrafię rozwijać zarówno dedykowane aplikacje w&nbsp;Vue, Nuxt
                 czy&nbsp;Astro, jak&nbsp;i&nbsp;projektować skalowalne systemy
                 w&nbsp;oparciu o&nbsp;PHP i&nbsp;MySQL.<br />Rozumiem
                 projektowanie nie&nbsp;tylko od&nbsp;strony kodu,
                 ale&nbsp;i&nbsp;widoczności w&nbsp;sieci.
               </p>
-              <p class="lead">
+              <p class="lead right">
                 Zamiast trzech osób - masz jednego partnera. Zbuduję
                 dla&nbsp;Ciebie stronę www, aplikację lub sklep internetowy,
                 zajmę&nbsp;się ich optymalizacją pod&nbsp;wyszukiwarkę Google
                 i&nbsp;zadbam o&nbsp;techniczne szczegóły, które zwiększą Twoją
                 sprzedaż.
               </p>
-              <p class="lead">
+              <p class="lead right bold-600">
                 Dzięki temu Twój biznes urośnie szybciej,<br />a&nbsp;Ty
                 oszczędzisz czas i&nbsp;pieniądze.
               </p>
             </div>
-            <a href="mailto:mchodacki@hotmail.com" class="button w-button"
-              >Wyślij mail</a
-            >
+            <div class="contact-buttons">
+              <a href="tel:+48506788894" class="button w-button">
+                <img
+                  src="/assets/icons/btn_phone.svg"
+                  loading="lazy"
+                  alt="Zadzwoń"
+                  class="icon"
+                />Zadzwoń</a
+              >
+              <a href="mailto:kontakt@marekchodacki.pl" class="button w-button">
+                <img
+                  src="/assets/icons/btn_mail.svg"
+                  loading="lazy"
+                  alt="Wyślij mail"
+                  class="icon"
+                />Wyślij mail</a
+              >
+            </div>
           </main>
           <div class="projects-section">
             <!-- Aplikacje webowe -->
