@@ -1,5 +1,5 @@
 ---
-const { title, desc, tech } = Astro.props
+const { title, url, rel, anchor, desc, tech } = Astro.props
 import { preventOrphans } from '../scripts/helpers'
 
 const array = title.split(' | ')
@@ -12,6 +12,18 @@ const array = title.split(' | ')
     >
     <span class="line bold-600" style="font-size: 1.5rem;">{array[1]}</span>
   </h3>
+  {
+    url && anchor && (
+      <div class="project-buttons">
+        {url && (
+          <a href={url} target="_blank" rel={rel} class="button w-button">
+            {anchor}
+          </a>
+        )}
+      </div>
+    )
+  }
+
   <div class="project-desc project-desc-list w-richtext">
     <ul role="list">
       {desc.map((item) => <li>{preventOrphans(item)}</li>)}

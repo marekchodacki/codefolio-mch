@@ -6,6 +6,9 @@ import BackButton from '../components/BackButton.astro'
 const projects = [
   {
     title: '2025 | Winnica Koniczynowe Wzgórze | Puławy',
+    url: '',
+    rel: 'noopener noreferrer nofollow',
+    anchor: '',
     desc: [
       'Stworzenie kompletnej identyfikacji wizualnej: logo, etykiety, nadruki, odzież firmowa',
       'Konsultacje brandingowe i pilnowanie spójnej komunikacji wizualnej',
@@ -24,6 +27,9 @@ const projects = [
   },
   {
     title: '2024 | WaterFamily | Radom',
+    url: 'https://waterfamily.com.pl/',
+    rel: 'noopener noreferrer nofollow',
+    anchor: 'Zobacz sklep',
     desc: [
       'Kompleksowe wdrożenie sklepu internetowego WooCommerce (motyw Neve) dostosowanego do sprzedaży 200+ produktów',
       'Optymalizacja techniczna i wydajnościowa: hosting, SSL, DNS, CDN',
@@ -45,6 +51,9 @@ const projects = [
   },
   {
     title: '2023 | HurtGSM | Radom',
+    url: 'https://hurtgsm.pl/',
+    rel: 'noopener noreferrer nofollow',
+    anchor: 'Zobacz sklep',
     desc: [
       'Wdrożenie skalowalnego sklepu WooCommerce (motyw Porto) z dedykowanymi modyfikacjami front-endu i wtyczek',
       'Integracja z wieloma systemami: kurierzy (InPost, Pocztex, Żabka, Orlen, PP), płatności (Tpay), platforma multichannel Sellasist',
@@ -68,6 +77,9 @@ const projects = [
   },
   {
     title: '2022 | WedzIGrilluj | Lublin',
+    url: 'https://wedzigrilluj.pl/',
+    rel: 'noopener noreferrer nofollow',
+    anchor: 'Zobacz sklep',
     desc: [
       'Migracja PrestaShop do WooCommerce + przekierowaia 301 (utrzymanie pozycji w Google)',
       'Projekt i wdrożenie sklepu (motyw Maison) zoptymalizowanego pod UX i konwersję',
@@ -91,6 +103,9 @@ const projects = [
   },
   {
     title: '2021 | ClubGarden | Radom',
+    url: 'https://clubgarden.pl/',
+    rel: 'noopener noreferrer nofollow',
+    anchor: 'Zobacz sklep',
     desc: [
       'Wdrożenie sklepu WooCommerce (motyw Unero) z nowoczesnym designem',
       'Pełna konfiguracja techniczna: hosting, domena, SSL, DNS, FTP',
@@ -122,6 +137,9 @@ const projects = [
                   projects.map((project) => (
                     <Project
                       title={project.title}
+                      url={project.url}
+                      rel={project.rel}
+                      anchor={project.anchor}
                       desc={project.desc}
                       tech={project.tech}
                     />
