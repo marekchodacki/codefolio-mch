@@ -553,6 +553,11 @@ img {
   display: flex;
   gap: var(--spacing-md);
 }
+.project-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: 1rem 0;
+}
 
 /* ============================================
    CHIPS COMPONENTS

@@ -6,11 +6,17 @@ import BackButton from '../components/BackButton.astro'
 const projects = [
   {
     title: '2025 | Codefolio MCh',
+    url: '',
+    rel: 'noopener noreferrer',
+    anchor: '',
     desc: ['Prace w toku'],
     tech: ['Astro', 'JavaScript', 'CSS'],
   },
   {
     title: '2024 | iChip WebApp | Demo',
+    url: 'https://ichip-webapp.vercel.app/',
+    rel: 'noopener noreferrer',
+    anchor: 'Zobacz demo',
     desc: [
       'Projekt i wdrożenie prototypu aplikacji webowej dla serwisu urządzeń mobilnych',
       'Zaawansowany formularz z walidacją do składania zleceń napraw online',
@@ -53,6 +59,9 @@ const projects = [
                   projects.map((project) => (
                     <Project
                       title={project.title}
+                      url={project.url}
+                      rel={project.rel}
+                      anchor={project.anchor}
                       desc={project.desc}
                       tech={project.tech}
                     />
