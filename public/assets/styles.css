@@ -24,19 +24,19 @@
   --color-bg-tertiary: #2b2b2b;
   --color-bg-elevated: #202020;
   --color-bg-white: #fff;
-  --color-bg-current: #3b075d; /*#1e446c;*/
+  --color-bg-current: #04466a;
   
   /* Colors - Border */
   --color-border-primary: #353535;
   --color-border-secondary: #363636;
   --color-border-transparent: rgba(0, 0, 0, 0);
-  --color-border-current: #6600a9;
+  --color-border-current: #125c84;
   
   /* Colors - Text */
   --color-text-primary: #ddd;
   --color-text-secondary: #a8a8a8;
   --color-text-dark: #333;
-  --color-text-h3: #925fcd;
+  --color-text-h3: #268bc3;
   
   /* Colors - Accent */
   --color-accent-blue: #3898ec;
@@ -63,8 +63,8 @@
   --font-size-lg: 1.125rem;      /* 18px */
   --font-size-xl: 1.5rem;        /* 24px */
   --font-size-2xl: 2rem;         /* 32px */
-  --font-size-3xl: 2.5rem;      /* 36px */
-  --font-size-4xl: 3rem;     /* 54px */
+  --font-size-3xl: 2.5rem;       /* 36px */
+  --font-size-4xl: 3rem;         /* 54px */
   --font-size-5xl: 3.625rem;     /* 58px */
   
   /* Typography - Line Heights */
