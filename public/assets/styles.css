@@ -1032,6 +1032,7 @@ textarea::placeholder {
 
   .inputs-container {
     flex-direction: column;
+    gap: 0;
   }
 
   .w-50 {
