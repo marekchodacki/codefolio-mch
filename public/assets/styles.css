@@ -175,6 +175,16 @@ h1 .line.right .underline {
   border-bottom: 2px solid #ddd;
 }
 
+h2 {
+  color: var(--color-text-primary);
+  margin-top: 1rem;
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-2xl);
+  font-weight: 300;
+  line-height: var(--line-height-xl);
+  text-align: center;
+}
+
 h3 {
   color: var(--color-text-h3);
   margin-top: 0;
@@ -282,6 +292,14 @@ img {
 
 .bold-600 {
   font-weight: 600;
+}
+
+.pb0 {
+  padding-bottom: 0;
+}
+
+.w-50 {
+  width: 50%;
 }
 
 /* ============================================
@@ -549,7 +567,7 @@ img {
   display: inline-block;
 }
 
-.contact-buttons {
+.home-buttons {
   display: flex;
   gap: var(--spacing-md);
 }
@@ -699,6 +717,92 @@ img {
   justify-content: flex-end;
 }
 
+/* ============================================
+   FORMS
+   ============================================ */
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 1rem;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.inputs-container {
+  display: flex;
+  justify-content: between;
+  gap: 2rem;
+}
+input,
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  background-color: #111;      /* lepszy kontrast w trybie dark */
+  color: #ddd;
+  font-size: 1rem;
+  outline: none;
+  resize: vertical;            /* textarea: pozwala użytkownikowi zmieniać wysokość */
+  font-family: inherit;        /* dziedziczenie fontu */
+  box-sizing: border-box;      /* ważne, żeby padding nie rozwalał layoutu */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Specyficzne style tylko dla input (np. stała wysokość) */
+input {
+  height: 3rem;
+}
+
+textarea {
+  min-height: 8rem;
+}
+
+/* Styl focus — wspólny dla input i textarea */
+input:focus,
+textarea:focus {
+  border-color: #888;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Placeholder styl (cross-browser) */
+input::placeholder,
+textarea::placeholder {
+  color: #666;
+  opacity: 1; /* Firefox fix */
+}
+.send-button {
+  width: 100%;
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--color-bg-current);
+  border: 1px solid var(--color-border-current);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) 1.25rem;
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  line-height: var(--line-height-relaxed);
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+}
+.send-button:hover {
+  opacity: 0.9;
+  border-color: var(--color-border-current);
+}
+.send-button .icon {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+  display: inline-block;
+}
+
 /* ==========================================================================
    ANIMATIONS
    ========================================================================== */
@@ -722,6 +826,45 @@ img {
 @keyframes revealFill {
   to { fill-opacity: 1; }
 }
+
+.available {
+  width: fit-content;
+  margin: 0 auto 2rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #333;
+  border-radius: 1.5rem;
+  background-color: #000;
+  color: #00c853;
+  font-size: 0.9rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.status-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin-right: 0.5rem;
+  background-color: #00c853;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 rgba(0, 200, 83, 0.4);
+  animation: pulse 1.5s infinite;
+}
+
+/* Animowana poświata */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 200, 83, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 200, 83, 0);
+  }
+}
+
 
 /* ============================================
    MEDIA QUERIES - TABLET (max-width: 991px)
@@ -885,5 +1028,13 @@ img {
 
   .mobile-hidden {
     display: none;
+  }
+
+  .inputs-container {
+    flex-direction: column;
+  }
+
+  .w-50 {
+    width: 100%;
   }
 }
