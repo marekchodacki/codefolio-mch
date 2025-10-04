@@ -85,6 +85,21 @@ const { selectedItem } = Astro.props
         />
         <div>SEO i&nbsp;Pozycjonowanie</div>
       </a>
+      <a
+        href="/kontakt"
+        class={`nav-link-container w-inline-block ${
+          selectedItem === 'kontakt' ? 'w--current' : ''
+        }`}
+        aria-current={selectedItem === 'kontakt' ? 'page' : undefined}
+      >
+        <img
+          src="/assets/icons/nav_contact.svg"
+          loading="eager"
+          alt="Kontakt"
+          class="nav-link-image"
+        />
+        <div>Kontakt</div>
+      </a>
     </nav>
 
     <div
