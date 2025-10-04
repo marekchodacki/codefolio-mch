@@ -776,6 +776,7 @@ textarea::placeholder {
   opacity: 1; /* Firefox fix */
 }
 .send-button {
+  width: 100%;
   text-decoration: none;
   color: #fff;
   background-color: var(--color-bg-current);
@@ -787,6 +788,7 @@ textarea::placeholder {
   line-height: var(--line-height-relaxed);
   transition: all var(--transition-fast);
   display: inline-flex;
+  align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
   cursor: pointer;
