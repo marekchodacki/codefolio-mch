@@ -1,0 +1,48 @@
+import type { Navigation } from '../../types'
+
+export const data: Navigation = {
+  niv: {
+    url: '/',
+    image: '/assets/pics/marek.jpg',
+    alt: 'Marek Chodacki',
+    name: 'Marek Chodacki',
+    vocation: 'Programista Fullstack',
+  },
+  nav: [
+    {
+      url: '/',
+      slug: 'strona-glowna',
+      icon: '/assets/icons/nav_home.svg',
+      alt: 'Strona główna',
+      name: 'Strona Główna',
+    },
+    {
+      url: '/aplikacje-webowe',
+      slug: 'aplikacje-webowe',
+      icon: '/assets/icons/nav_webapps.svg',
+      alt: 'Tworzenie aplikacji webowych',
+      name: 'Aplikacje Webowe',
+    },
+    {
+      url: '/strony-sklepy',
+      slug: 'strony-sklepy',
+      icon: '/assets/icons/nav_websites.svg',
+      alt: 'Projektowanie stron i sklepów internetowych',
+      name: 'Strony i&nbsp;Sklepy',
+    },
+    {
+      url: '/seo-pozycjonowanie',
+      slug: 'seo-pozycjonowanie',
+      icon: '/assets/icons/nav_seo.svg',
+      alt: 'Optymalizacja SEO i Pozycjonowanie stron internetowych',
+      name: 'SEO i&nbsp;Pozycjonowanie',
+    },
+    {
+      url: '/kontakt',
+      slug: 'kontakt',
+      icon: '/assets/icons/nav_contact.svg',
+      alt: 'Kontakt',
+      name: 'Kontakt',
+    },
+  ],
+}

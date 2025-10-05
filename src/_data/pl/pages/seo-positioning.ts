@@ -1,0 +1,101 @@
+import type { ProjectPageData } from '../../types'
+
+export const data: ProjectPageData = {
+  seo: {
+    title: 'Optymalizacja SEO i pozycjonowanie stron www | Marek Chodacki'
+  },
+  selectedItem: 'seo-pozycjonowanie',
+  h1: 'SEO i Pozycjonowanie',
+  projects:[
+    {
+      title: '2021-2025 | Projekty Klientów',
+      url: '',
+      rel: '',
+      anchor: '',
+      description: [
+        'Optymalizacja SEO jako integralna część projektów stron i sklepów internetowych',
+        'Audyty techniczne SEO i wdrażanie najlepszych praktyk on-site podczas developmentu',
+        'Optymalizacja wydajności, struktury i treści witryn zgodnie z wytycznymi Google',
+        'Doradztwo SEO dla Klientów w zakresie długofalowej widoczności',
+        'Zaawansowana analiza i raportowanie danych SEO',
+      ],
+      label: 'Technologie i&nbsp;narzędzia',
+      techs: [
+        'Google Analytics',
+        'Google Search Console',
+        'Screaming Frog',
+        'PageSpeed Insights',
+        'Schema.org',
+        'Yoast SEO / Rank Math',
+        'Excel & Google Sheets',
+      ],
+    },
+    {
+      title: '2019-2021 | K2 Precise S.A. | Warszawa',
+      url: 'https://k2precise.pl/',
+      rel: 'noopener noreferrer nofollow',
+      anchor: 'Odwiedź stronę',
+      description: [
+        'Tworzenie i optymalizacja treści blogowych zgodnie z najlepszymi praktykami SEO',
+        'Opracowanie treści i metadanych dla materiałów wideo: tytuły, opisy, transkrypcje/napisy',
+        'Kompleksowa optymalizacja on-page: tytuły, nagłówki, metadane, struktura treści',
+        'Zapewnienie spójności językowej i wizerunkowej w komunikacji wielokanałowej',
+      ],
+      label: 'Technologie i&nbsp;narzędzia',
+      techs: [
+        'YouTube Studio',
+        'Google Analytics',
+        'Google Search Console',
+        'Google Keyword Planner',
+        'Ahrefs',
+        'Screaming Frog',
+      ],
+    },
+    {
+      title: '2017-2019 | Centrum Kształcenia Proeuropejskiego | Lublin',
+      url: 'https://ckp.lublin.pl/',
+      rel: 'noopener noreferrer nofollow',
+      anchor: 'Odwiedź stronę',
+      description: [
+        'Prowadzenie szkoleń z zakresu tworzenia, optymalizacji SEO i pozycjonowania stron internetowych w ramach projektów unijnych',
+        'Współpraca przy optymalizacji on-site i off-site strony firmowej',
+        'Wsparcie działań promocyjnych i marketingowych',
+        'Prowadzenie warsztatów analitycznych',
+        'Przygotowanie i prowadzenie materiałów dydaktycznych',
+      ],
+      label: 'Technologie i&nbsp;narzędzia',
+      techs: [
+        'Google Analytics',
+        'Google Search Console',
+        'Google Keyword Planner',
+        'Excel & Google Sheets',
+        'PowerPoint',
+      ],
+    },
+    {
+      title: '2015-2017 | Performance Media | Lublin',
+      url: 'https://performancegroup.pl/',
+      rel: 'noopener noreferrer nofollow',
+      anchor: 'Odwiedź stronę',
+      description: [
+        'Planowanie i wdrażanie strategii SEO dla stron internetowych klientów agencji',
+        'Audyty techniczne SEO: analiza treści, wydajności i struktury witryn',
+        'Raportowanie i analiza efektywności kampanii reklamowych',
+        'Współpraca z zespołem IT przy rozwoju dedykowanego oprogramowania',
+        'Automatyzacja procesów poprzez tworzenie skryptów PHP',
+        'Projektowanie dedykowanych arkuszy z automatyczną konsolidacją danych z wielu źródeł, co znacząco skracało czas analizy i raportowania, a także codziennej pracy',
+      ],
+      label: 'Technologie i&nbsp;narzędzia',
+      techs: [
+        'Google Analytics',
+        'Google Search Console',
+        'Ahrefs',
+        'Majestic SEO',
+        'SEMStorm',
+        'Screaming Frog',
+        'PHP',
+        'Excel & Google Sheets',
+      ],
+    },
+  ]
+}
