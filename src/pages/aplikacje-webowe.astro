@@ -1,79 +1,38 @@
 ---
-import Header from '../components/Header.astro'
-import Project from '../components/Project.astro'
-import Sidebar from '../components/Sidebar.astro'
+import Layout from '../layouts/Layout.astro'
 import BackButton from '../components/BackButton.astro'
-const projects = [
-  {
-    title: '2025 | Codefolio MCh',
-    url: '',
-    rel: 'noopener noreferrer',
-    anchor: '',
-    desc: ['Prace w toku'],
-    tech: ['Astro', 'JavaScript', 'CSS'],
-  },
-  {
-    title: '2024 | iChip WebApp | Demo',
-    url: 'https://ichip-webapp.vercel.app/',
-    rel: 'noopener noreferrer',
-    anchor: 'Zobacz demo',
-    desc: [
-      'Projekt i wdrożenie prototypu aplikacji webowej dla serwisu urządzeń mobilnych',
-      'Zaawansowany formularz z walidacją do składania zleceń napraw online',
-      'Dynamiczny cennik z wyszukiwarką modeli urządzeń',
-      'Interaktywna mapa lokalizacji serwisu ułatwiająca klientom dotarcie do firmy',
-      'Responsywny interfejs użytkownika zbudowany z myślą o UX i szybkości działania',
-      'Integracja z EmailJS do obsługi formularza zgłoszeniowego bez potrzeby backendu',
-    ],
-    tech: [
-      'Vue 3',
-      'TypeScript',
-      'Vite',
-      'Vue Router',
-      'Tailwind',
-      'Vee-Validate',
-      'Zod',
-      'EmailJS',
-      'Vercel',
-    ],
-  },
-]
+import Project from '../components/Project.astro'
+
+import { data } from '../_data/pl/pages/webapps'
+const { seo, selectedItem, h1, projects } = data
 ---
 
-<!doctype html>
-<html>
-  <Header title="Tworzenie aplikacji webowych | Marek Chodacki" />
-  <body>
-    <div class="content">
-      <Sidebar selectedItem="aplikacje-webowe" />
-      <nav class="main">
-        <div class="container">
-          <div class="back-nav-container">
-            <BackButton />
+<Layout title={seo.title} selectedItem={selectedItem}>
+  <nav class="main">
+    <div class="container">
+      <div class="back-nav-container">
+        <BackButton />
+      </div>
+      <div class="content-container">
+        <h1>{h1}</h1>
+        <section class="items-container">
+          <div class="resouce-items">
+            {
+              projects.map((project) => (
+                <Project
+                  title={project.title}
+                  url={project.url}
+                  rel={project.rel}
+                  anchor={project.anchor}
+                  description={project.description}
+                  label={project.label}
+                  techs={project.techs}
+                />
+              ))
+            }
           </div>
-          <div class="content-container">
-            <h1>Aplikacje webowe</h1>
-            <section class="items-container">
-              <div class="resouce-items">
-                {
-                  projects.map((project) => (
-                    <Project
-                      title={project.title}
-                      url={project.url}
-                      rel={project.rel}
-                      anchor={project.anchor}
-                      desc={project.desc}
-                      tech={project.tech}
-                    />
-                  ))
-                }
-              </div>
-            </section>
-          </div>
-        </div>
-      </nav>
+        </section>
+      </div>
     </div>
-
-    <!--[if lte IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
-  </body>
-</html>
+  </nav>
+</Layout>
