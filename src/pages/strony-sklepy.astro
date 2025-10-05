@@ -1,157 +1,38 @@
 ---
-import Header from '../components/Header.astro'
-import Project from '../components/Project.astro'
-import Sidebar from '../components/Sidebar.astro'
+import Layout from '../layouts/Layout.astro'
 import BackButton from '../components/BackButton.astro'
-const projects = [
-  {
-    title: '2025 | Winnica Koniczynowe Wzgórze | Puławy',
-    url: '',
-    rel: 'noopener noreferrer nofollow',
-    anchor: '',
-    desc: [
-      'Stworzenie kompletnej identyfikacji wizualnej: logo, etykiety, nadruki, odzież firmowa',
-      'Konsultacje brandingowe i pilnowanie spójnej komunikacji wizualnej',
-      'Przygotowanie materiałów produkcyjnych do druku i koordynacja z drukarnią',
-      'Wdrożenie sklepu internetowego WooCommerce (motyw OceanWP) - w trakcie realizacji, nacisk na sprzedaż wina online i prostotę obsługi przez właściciela',
-    ],
-    tech: [
-      'WordPress',
-      'WooCommerce',
-      'OceanWP',
-      'PHP',
-      'MySQL',
-      'Photoshop',
-      'Illustrator',
-    ],
-  },
-  {
-    title: '2024 | WaterFamily | Radom',
-    url: 'https://waterfamily.com.pl/',
-    rel: 'noopener noreferrer nofollow',
-    anchor: 'Zobacz sklep',
-    desc: [
-      'Kompleksowe wdrożenie sklepu internetowego WooCommerce (motyw Neve) dostosowanego do sprzedaży 200+ produktów',
-      'Optymalizacja techniczna i wydajnościowa: hosting, SSL, DNS, CDN',
-      'SEO copywriting: hasła marketingowe, treści stron, treści produktowe, treści blogowe',
-      'Integracja z systemami płatności, firmami kurierskimi i porównywarką cen Ceneo',
-      'Projekt materiałów offline wspierających identyfikację marki: ulotki, banery, wizytówki, szyld',
-    ],
-    tech: [
-      'WordPress',
-      'WooCommerce',
-      'Neve',
-      'PHP',
-      'MySQL',
-      'Google Analytics',
-      'Google Search Console',
-      'Google Keyword Planner',
-      'Photoshop',
-    ],
-  },
-  {
-    title: '2023 | HurtGSM | Radom',
-    url: 'https://hurtgsm.pl/',
-    rel: 'noopener noreferrer nofollow',
-    anchor: 'Zobacz sklep',
-    desc: [
-      'Wdrożenie skalowalnego sklepu WooCommerce (motyw Porto) z dedykowanymi modyfikacjami front-endu i wtyczek',
-      'Integracja z wieloma systemami: kurierzy (InPost, Pocztex, Żabka, Orlen, PP), płatności (Tpay), platforma multichannel Sellasist',
-      'Codzienna administracja, monitorowanie synchronizacji zewnętrznych systemów sprzedaży',
-      'Wykonywanie i edycja zdjęć produktowych (360° Orbitvu Alphashot)',
-      'Administracja i aktualizacja 4500+ produktów w sklepie',
-    ],
-    tech: [
-      'WordPress',
-      'WooCommerce',
-      'Porto',
-      'PHP',
-      'MySQL',
-      'SellAsist',
-      'Google Analytics',
-      'Google Search Console',
-      'Ubersuggest',
-      'Alphashot Editor Pro',
-      'Photoshop',
-    ],
-  },
-  {
-    title: '2022 | WedzIGrilluj | Lublin',
-    url: 'https://wedzigrilluj.pl/',
-    rel: 'noopener noreferrer nofollow',
-    anchor: 'Zobacz sklep',
-    desc: [
-      'Migracja PrestaShop do WooCommerce + przekierowaia 301 (utrzymanie pozycji w Google)',
-      'Projekt i wdrożenie sklepu (motyw Maison) zoptymalizowanego pod UX i konwersję',
-      'Kompleksowe SEO (on-site + off-site) oraz strategia contentowa oparta o keyword research',
-      'Optymalizacja prędkości i wydajności sklepu pod kątem doświadczeń użytkownika i SEO',
-      'Raportowanie działań SEO i konsultacje rozwojowe',
-    ],
-    tech: [
-      'WordPress',
-      'WooCommerce',
-      'PrestaShop',
-      'Maison',
-      'PHP',
-      'MySQL',
-      'Google Analytics',
-      'Google Search Console',
-      'Google Keyword Planner',
-      'Google PageSpeed Insights',
-      'GTMetrix',
-    ],
-  },
-  {
-    title: '2021 | ClubGarden | Radom',
-    url: 'https://clubgarden.pl/',
-    rel: 'noopener noreferrer nofollow',
-    anchor: 'Zobacz sklep',
-    desc: [
-      'Wdrożenie sklepu WooCommerce (motyw Unero) z nowoczesnym designem',
-      'Pełna konfiguracja techniczna: hosting, domena, SSL, DNS, FTP',
-      'Kampania SEO i długoterminowe działania pozycjonujące dla zwiększenia widoczności w wyszukiwarce i ruchu organicznego',
-    ],
-    tech: ['WordPress', 'WooCommerce', 'Unero', 'PHP', 'MySQL', 'Photoshop'],
-  },
-]
+import Project from '../components/Project.astro'
+
+import { data } from '../_data/pl/pages/websites-stores'
+const { seo, selectedItem, h1, projects } = data
 ---
 
-<!doctype html>
-<html>
-  <Header
-    title="Projektowanie stron www i sklepów internetowych | Marek Chodacki"
-  />
-  <body>
-    <div class="content">
-      <Sidebar selectedItem="strony-sklepy" />
-      <nav class="main">
-        <div class="container">
-          <div class="back-nav-container">
-            <BackButton />
+<Layout title={seo.title} selectedItem={selectedItem}>
+  <nav class="main">
+    <div class="container">
+      <div class="back-nav-container">
+        <BackButton />
+      </div>
+      <div class="content-container">
+        <h1>{h1}</h1>
+        <section class="items-container">
+          <div class="resouce-items">
+            {
+              projects.map((project) => (
+                <Project
+                  title={project.title}
+                  url={project.url}
+                  rel={project.rel}
+                  anchor={project.anchor}
+                  description={project.description}
+                  label={project.label}
+                  techs={project.techs}
+                />
+              ))
+            }
           </div>
-          <div class="content-container">
-            <h1>Strony i Sklepy</h1>
-            <section class="items-container">
-              <div class="resouce-items">
-                {
-                  projects.map((project) => (
-                    <Project
-                      title={project.title}
-                      url={project.url}
-                      rel={project.rel}
-                      anchor={project.anchor}
-                      desc={project.desc}
-                      tech={project.tech}
-                    />
-                  ))
-                }
-              </div>
-            </section>
-          </div>
-        </div>
-      </nav>
+        </section>
+      </div>
     </div>
-
-    <!--[if lte IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
-  </body>
-</html>
+  </nav>
+</Layout>

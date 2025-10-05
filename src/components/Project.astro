@@ -1,5 +1,5 @@
 ---
-const { title, url, rel, anchor, desc, tech } = Astro.props
+const { title, url, rel, anchor, description, label, techs } = Astro.props
 import { preventOrphans } from '../scripts/helpers'
 
 const array = title.split(' | ')
@@ -26,11 +26,11 @@ const array = title.split(' | ')
 
   <div class="project-desc project-desc-list w-richtext">
     <ul role="list">
-      {desc.map((item) => <li>{preventOrphans(item)}</li>)}
+      {description.map((item: string) => <li>{preventOrphans(item)}</li>)}
     </ul>
   </div>
-  <div class="mini-label-white">Technologie i&nbsp;narzędzia</div>
+  <div class="mini-label-white" set:html={label} />
   <div class="chips-container">
-    {tech.map((techItem) => <div class="single-chip">{techItem}</div>)}
+    {techs.map((tech: string) => <div class="single-chip">{tech}</div>)}
   </div>
 </div>
