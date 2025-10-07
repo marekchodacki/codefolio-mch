@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro'
 import BackButton from '../components/BackButton.astro'
 
 import { data } from '../_data/pl/pages/contact'
-const { seo, selectedItem, intro } = data
+const { seo, selectedItem, intro, fields, submit } = data
 ---
 
 <Layout title={seo.title} selectedItem={selectedItem}>
@@ -22,257 +22,126 @@ const { seo, selectedItem, intro } = data
           <div class="available">
             <span class="status-dot"></span>{intro.chip}
           </div>
-          <div class="form-container">
-            <form id="contact-form">
-              <div class="inputs-container">
-                <div class="w-50">
-                  <input
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    placeholder="Twoje imię"
-                    autocomplete="given-name"
-                  />
-                  <span class="error-message" data-error="firstName"></span>
+          <form class="contact-form">
+            {
+              fields.map((f) => (
+                <div class:list={`field ${f.isHalf ? 'is-half' : 'is-full'}`}>
+                  {(() => {
+                    switch (f.type) {
+                      case 'text':
+                      case 'email':
+                        return (
+                          <input
+                            type={f.type}
+                            name={f.name}
+                            id={f.id}
+                            placeholder={f.placeholder}
+                            autocomplete={f.autocomplete}
+                            required={f.required}
+                          />
+                          <span class="error-message" data-error={f.name}></span>
+                        )
+                      case 'textarea':
+                        return (
+                          <textarea
+                            name={f.name}
+                            id={f.id}
+                            placeholder={f.placeholder}
+                            rows={f.rows}
+                            required={f.required}
+                          />
+                          <span class="error-message" data-error={f.name}></span>
+                        )
+                      default:
+                        return null
+                    }
+                  })()}
                 </div>
-                <div class="w-50">
-                  <input
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    placeholder="Twoje nazwisko"
-                    autocomplete="family-name"
-                  />
-                  <span class="error-message" data-error="lastName"></span>
-                </div>
-              </div>
+              ))
+            }
 
-              <div class="input-wrapper">
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="*Twój e-mail"
-                  required
-                  autocomplete="email"
-                />
-                <span class="error-message" data-error="email"></span>
-              </div>
-
-              <div class="input-wrapper">
-                <textarea
-                  name="message"
-                  id="message"
-                  placeholder="*Opowiedz o swoim projekcie"
-                  required
-                  rows="5"></textarea>
-                <span class="error-message" data-error="message"></span>
-              </div>
-
+            <div class="row is-full">
               <div id="success-message" class="success-message hidden">
-                ✓ Formularz został wysłany! Dziękuję za kontakt.
+                {submit.messageSuccess}
               </div>
-
               <div id="error-message" class="error-message-global hidden">
-                ✗ Wystąpił błąd podczas wysyłania. Spróbuj ponownie.
+                {submit.messageError}
               </div>
+            </div>
 
+            <div class="row is-full">
               <button
                 type="submit"
                 role="button"
-                class="send-button"
+                class="send-button is-full"
                 id="submit-button"
               >
-                <span id="button-text">Wyślij</span>
-                <span id="button-loading" class="hidden">Wysyłanie...</span>
+                <span id="button-text">{submit.btnText}</span>
+                <span id="button-loading" class="hidden">{submit.btnLoadingText}</span>
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
         </section>
       </div>
     </div>
   </nav>
+</Layout>
 
-  <style>
-    .input-wrapper {
-      position: relative;
-      width: 100%;
-    }
+<script>
+  import emailjs from '@emailjs/browser'
+  import { z } from 'zod'
+  import type { ZodError } from 'zod'
+  import { clientZodSchema } from '../utils/validation'
 
-    .error-message {
-      display: block;
-      color: #ef4444;
-      font-size: 0.875rem;
-      margin: 0.25rem 0.25rem 0.4rem 0.25rem;
-      min-height: 1.25rem;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out;
-    }
+  const form = document.getElementById('contact-form') as HTMLFormElement
+  const submitButton = document.getElementById(
+    'submit-button'
+  ) as HTMLButtonElement
+  const buttonText = document.getElementById('button-text') as HTMLSpanElement
+  const buttonLoading = document.getElementById(
+    'button-loading'
+  ) as HTMLSpanElement
+  const successMessage = document.getElementById(
+    'success-message'
+  ) as HTMLDivElement
+  const errorMessageGlobal = document.getElementById(
+    'error-message'
+  ) as HTMLDivElement
 
-    .error-message:not(:empty) {
-      opacity: 1;
-    }
+  const firstNameInput = document.getElementById(
+    'firstName'
+  ) as HTMLInputElement | null
+  const lastNameInput = document.getElementById(
+    'lastName'
+  ) as HTMLInputElement | null
+  const emailInput = document.getElementById('email') as HTMLInputElement | null
+  const messageInput = document.getElementById(
+    'message'
+  ) as HTMLTextAreaElement | null
 
-    .success-message {
-      background-color: #d1fae5;
-      border: 1px solid #10b981;
-      color: #065f46;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      font-weight: 500;
-    }
+  function getFieldSchema(fieldName: string) {
+    const shape = (clientZodSchema as z.ZodObject<any>).shape
+    return shape[fieldName as keyof typeof shape] as z.ZodTypeAny | null
+  }
 
-    .error-message-global {
-      background-color: #fee2e2;
-      border: 1px solid #ef4444;
-      color: #991b1b;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      font-weight: 500;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .send-button {
-      position: relative;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .send-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    #button-loading::after {
-      content: '';
-      display: inline-block;
-      width: 1rem;
-      height: 1rem;
-      margin-left: 0.5rem;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    input.error,
-    textarea.error {
-      border-color: #ef4444;
-    }
-  </style>
-
-  <script>
-    import emailjs from '@emailjs/browser'
-    import { z } from 'zod'
-    import type { ZodError } from 'zod'
-
-    const clientZodSchema = z.object({
-      firstName: z
-        .string()
-        .min(2, 'Imię musi mieć minimum 2 znaki')
-        .max(50, 'Imię może mieć maksymalnie 50 znaków')
-        .optional()
-        .or(z.literal('')),
-      lastName: z
-        .string()
-        .min(2, 'Nazwisko musi mieć minimum 2 znaki')
-        .max(50, 'Nazwisko może mieć maksymalnie 50 znaków')
-        .optional()
-        .or(z.literal('')),
-      email: z
-        .string()
-        .min(1, 'Email jest wymagany')
-        .email('Nieprawidłowy adres email'),
-      message: z
-        .string()
-        .min(10, 'Wiadomość musi mieć minimum 10 znaków')
-        .max(1000, 'Wiadomość może mieć maksymalnie 1000 znaków'),
+  function clearErrors(): void {
+    const errorElements = document.querySelectorAll('.error-message')
+    errorElements.forEach((el) => {
+      el.textContent = ''
+      ;(el as HTMLElement).style.opacity = '0'
     })
 
-    const form = document.getElementById('contact-form') as HTMLFormElement
-    const submitButton = document.getElementById(
-      'submit-button'
-    ) as HTMLButtonElement
-    const buttonText = document.getElementById('button-text') as HTMLSpanElement
-    const buttonLoading = document.getElementById(
-      'button-loading'
-    ) as HTMLSpanElement
-    const successMessage = document.getElementById(
-      'success-message'
-    ) as HTMLDivElement
-    const errorMessageGlobal = document.getElementById(
-      'error-message'
-    ) as HTMLDivElement
-
-    const firstNameInput = document.getElementById(
-      'firstName'
-    ) as HTMLInputElement | null
-    const lastNameInput = document.getElementById(
-      'lastName'
-    ) as HTMLInputElement | null
-    const emailInput = document.getElementById(
-      'email'
-    ) as HTMLInputElement | null
-    const messageInput = document.getElementById(
-      'message'
-    ) as HTMLTextAreaElement | null
-
-    function getFieldSchema(fieldName: string) {
-      const shape = (clientZodSchema as z.ZodObject<any>).shape
-      return shape[fieldName as keyof typeof shape] as z.ZodTypeAny | null
+    if (form) {
+      const inputs = form.querySelectorAll('input, textarea')
+      inputs.forEach((input) => input.classList.remove('error'))
     }
 
-    function clearErrors(): void {
-      const errorElements = document.querySelectorAll('.error-message')
-      errorElements.forEach((el) => {
-        el.textContent = ''
-        ;(el as HTMLElement).style.opacity = '0'
-      })
+    errorMessageGlobal?.classList.add('hidden')
+  }
 
-      if (form) {
-        const inputs = form.querySelectorAll('input, textarea')
-        inputs.forEach((input) => input.classList.remove('error'))
-      }
-
-      errorMessageGlobal?.classList.add('hidden')
-    }
-
-    function displayErrors(errors: ZodError): void {
-      errors.errors.forEach((error) => {
-        const fieldName = error.path[0] as string
-        const errorElement = document.querySelector(
-          `[data-error="${fieldName}"]`
-        ) as HTMLElement | null
-        const inputElement = document.getElementById(fieldName) as
-          | HTMLInputElement
-          | HTMLTextAreaElement
-          | null
-
-        if (errorElement) {
-          errorElement.textContent = error.message
-          errorElement.style.opacity = '1'
-        }
-        if (inputElement) {
-          inputElement.classList.add('error')
-        }
-      })
-    }
-
-    function validateField(fieldName: string, value: string): boolean {
-      const fieldSchema = getFieldSchema(fieldName)
+  function displayErrors(errors: ZodError): void {
+    errors.errors.forEach((error) => {
+      const fieldName = error.path[0] as string
       const errorElement = document.querySelector(
         `[data-error="${fieldName}"]`
       ) as HTMLElement | null
@@ -281,159 +150,178 @@ const { seo, selectedItem, intro } = data
         | HTMLTextAreaElement
         | null
 
-      if (!fieldSchema) {
-        if (errorElement) {
-          errorElement.textContent = ''
-          errorElement.style.opacity = '0'
-        }
-        inputElement?.classList.remove('error')
-        return true
+      if (errorElement) {
+        errorElement.textContent = error.message
+        errorElement.style.opacity = '1'
       }
-
-      const result = fieldSchema.safeParse(value)
-
-      if (!result.success) {
-        if (errorElement) {
-          errorElement.textContent = result.error.errors[0].message
-          errorElement.style.opacity = '1'
-        }
-        inputElement?.classList.add('error')
-        return false
-      } else {
-        if (errorElement) {
-          errorElement.textContent = ''
-          errorElement.style.opacity = '0'
-        }
-        inputElement?.classList.remove('error')
-        return true
+      if (inputElement) {
+        inputElement.classList.add('error')
       }
+    })
+  }
+
+  function validateField(fieldName: string, value: string): boolean {
+    const fieldSchema = getFieldSchema(fieldName)
+    const errorElement = document.querySelector(
+      `[data-error="${fieldName}"]`
+    ) as HTMLElement | null
+    const inputElement = document.getElementById(fieldName) as
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | null
+
+    if (!fieldSchema) {
+      if (errorElement) {
+        errorElement.textContent = ''
+        errorElement.style.opacity = '0'
+      }
+      inputElement?.classList.remove('error')
+      return true
     }
 
-    function resetForm(): void {
-      form?.reset()
-      clearErrors()
+    const result = fieldSchema.safeParse(value)
+
+    if (!result.success) {
+      if (errorElement) {
+        errorElement.textContent = result.error.errors[0].message
+        errorElement.style.opacity = '1'
+      }
+      inputElement?.classList.add('error')
+      return false
+    } else {
+      if (errorElement) {
+        errorElement.textContent = ''
+        errorElement.style.opacity = '0'
+      }
+      inputElement?.classList.remove('error')
+      return true
+    }
+  }
+
+  function resetForm(): void {
+    form?.reset()
+    clearErrors()
+  }
+
+  function setLoadingState(isLoading: boolean): void {
+    if (!submitButton || !buttonText || !buttonLoading) return
+    submitButton.disabled = isLoading
+    if (isLoading) {
+      buttonText.classList.add('hidden')
+      buttonLoading.classList.remove('hidden')
+    } else {
+      buttonText.classList.remove('hidden')
+      buttonLoading.classList.add('hidden')
+    }
+  }
+
+  async function handleSubmit(e: Event): Promise<void> {
+    e.preventDefault()
+    clearErrors()
+
+    const formData = {
+      firstName: firstNameInput?.value.trim() || '',
+      lastName: lastNameInput?.value.trim() || '',
+      email: emailInput?.value.trim() || '',
+      message: messageInput?.value.trim() || '',
     }
 
-    function setLoadingState(isLoading: boolean): void {
-      if (!submitButton || !buttonText || !buttonLoading) return
-      submitButton.disabled = isLoading
-      if (isLoading) {
-        buttonText.classList.add('hidden')
-        buttonLoading.classList.remove('hidden')
-      } else {
-        buttonText.classList.remove('hidden')
-        buttonLoading.classList.add('hidden')
-      }
+    const parsed = clientZodSchema.safeParse(formData)
+
+    if (!parsed.success) {
+      displayErrors(parsed.error)
+      const firstError = document.querySelector(
+        '.error-message:not(:empty)'
+      ) as HTMLElement | null
+      firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
     }
 
-    async function handleSubmit(e: Event): Promise<void> {
-      e.preventDefault()
-      clearErrors()
+    setLoadingState(true)
 
-      const formData = {
-        firstName: firstNameInput?.value.trim() || '',
-        lastName: lastNameInput?.value.trim() || '',
-        email: emailInput?.value.trim() || '',
-        message: messageInput?.value.trim() || '',
+    try {
+      const templateParams = {
+        firstName:
+          formData.firstName && formData.lastName
+            ? `${formData.firstName} ${formData.lastName}`
+            : formData.firstName || formData.lastName || 'Nieznany',
+        email: formData.email,
+        message: formData.message,
+        toName: 'marekchodacki.pl',
       }
 
-      const parsed = clientZodSchema.safeParse(formData)
+      await emailjs.send(
+        import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,
+        import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        { publicKey: import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY }
+      )
 
-      if (!parsed.success) {
-        displayErrors(parsed.error)
-        const firstError = document.querySelector(
-          '.error-message:not(:empty)'
-        ) as HTMLElement | null
-        firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      successMessage?.classList.remove('hidden')
+      successMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      resetForm()
+
+      setTimeout(() => {
+        successMessage?.classList.add('hidden')
+      }, 7000)
+    } catch (error) {
+      console.error('Błąd wysyłania formularza:', error)
+      errorMessageGlobal?.classList.remove('hidden')
+      errorMessageGlobal?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+      setTimeout(() => {
+        errorMessageGlobal?.classList.add('hidden')
+      }, 7000)
+    } finally {
+      setLoadingState(false)
+    }
+  }
+
+  if (form) {
+    let isSubmitting = false
+    form.addEventListener('submit', (e) => {
+      if (isSubmitting) {
+        e.preventDefault()
         return
       }
-
-      setLoadingState(true)
-
-      try {
-        const templateParams = {
-          firstName:
-            formData.firstName && formData.lastName
-              ? `${formData.firstName} ${formData.lastName}`
-              : formData.firstName || formData.lastName || 'Nieznany',
-          email: formData.email,
-          message: formData.message,
-          toName: 'marekchodacki.pl',
-        }
-
-        await emailjs.send(
-          import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,
-          import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,
-          templateParams,
-          { publicKey: import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY }
-        )
-
-        successMessage?.classList.remove('hidden')
-        successMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        resetForm()
-
-        setTimeout(() => {
-          successMessage?.classList.add('hidden')
-        }, 7000)
-      } catch (error) {
-        console.error('Błąd wysyłania formularza:', error)
-        errorMessageGlobal?.classList.remove('hidden')
-        errorMessageGlobal?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        })
-        setTimeout(() => {
-          errorMessageGlobal?.classList.add('hidden')
-        }, 7000)
-      } finally {
-        setLoadingState(false)
-      }
-    }
-
-    if (form) {
-      let isSubmitting = false
-      form.addEventListener('submit', (e) => {
-        if (isSubmitting) {
-          e.preventDefault()
-          return
-        }
-        isSubmitting = true
-        setTimeout(() => {
-          isSubmitting = false
-        }, 2000)
-      })
-      form.addEventListener('submit', handleSubmit)
-    }
-
-    const inputs = [
-      firstNameInput,
-      lastNameInput,
-      emailInput,
-      messageInput,
-    ].filter(Boolean) as Array<HTMLInputElement | HTMLTextAreaElement>
-
-    inputs.forEach((input) => {
-      input.addEventListener('blur', () => {
-        const fieldName = input.getAttribute('name')
-        if (!fieldName) return
-        const value = input.value.trim()
-        if (value || input.hasAttribute('required')) {
-          validateField(fieldName, value)
-        }
-      })
-
-      input.addEventListener('input', () => {
-        const fieldName = input.getAttribute('name')
-        if (!fieldName) return
-        const errorElement = document.querySelector(
-          `[data-error="${fieldName}"]`
-        ) as HTMLElement | null
-        if (errorElement && errorElement.textContent) {
-          errorElement.textContent = ''
-          errorElement.style.opacity = '0'
-          input.classList.remove('error')
-        }
-      })
+      isSubmitting = true
+      setTimeout(() => {
+        isSubmitting = false
+      }, 2000)
     })
-  </script>
-</Layout>
+    form.addEventListener('submit', handleSubmit)
+  }
+
+  const inputs = [
+    firstNameInput,
+    lastNameInput,
+    emailInput,
+    messageInput,
+  ].filter(Boolean) as Array<HTMLInputElement | HTMLTextAreaElement>
+
+  inputs.forEach((input) => {
+    input.addEventListener('blur', () => {
+      const fieldName = input.getAttribute('name')
+      if (!fieldName) return
+      const value = input.value.trim()
+      if (value || input.hasAttribute('required')) {
+        validateField(fieldName, value)
+      }
+    })
+
+    input.addEventListener('input', () => {
+      const fieldName = input.getAttribute('name')
+      if (!fieldName) return
+      const errorElement = document.querySelector(
+        `[data-error="${fieldName}"]`
+      ) as HTMLElement | null
+      if (errorElement && errorElement.textContent) {
+        errorElement.textContent = ''
+        errorElement.style.opacity = '0'
+        input.classList.remove('error')
+      }
+    })
+  })
+</script>
