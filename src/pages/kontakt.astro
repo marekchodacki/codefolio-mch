@@ -22,7 +22,7 @@ const { seo, selectedItem, intro, fields, submit } = data
           <div class="available">
             <span class="status-dot"></span>{intro.chip}
           </div>
-          <form class="contact-form">
+          <form id="contact-form" class="contact-form">
             {
               fields.map((f) => (
                 <div class:list={`field ${f.isHalf ? 'is-half' : 'is-full'}`}>
