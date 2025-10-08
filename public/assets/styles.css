@@ -359,6 +359,28 @@ img {
   outline: 0;
 }
 
+.nav-lang-switcher {  
+  margin-top: auto;
+  padding: var(--spacing-xl) 0;
+}  
+  
+.lang-link {  
+  display: inline-flex;  
+  align-items: center;  
+  gap: 0.5rem;  
+  color: var(--color-text-dark);
+  text-decoration: none;
+  transition:   
+    color var(--transition-base) ease;
+}  
+.lang-link:hover { color: var(--color-text-primary); }  
+  
+.lang-flag {  
+  width: 20px;  
+  height: 20px;  
+  flex: 0 0 auto;  
+}
+
 /* ============================================
    LAYOUT - MAIN STRUCTURE
    ============================================ */
@@ -435,6 +457,11 @@ img {
   padding: var(--spacing-sm);
   text-decoration: none;
   display: flex;
+}
+.nav-link-container:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-secondary);
 }
 
 .nav-link-container.w--current {
@@ -981,6 +1008,10 @@ textarea::placeholder {
     display: block;
   }
 
+  .nav-lang-switcher {  
+    display: none;  
+  }  
+  
   /* Layout - Tablet */
   .content {
     flex-direction: column;

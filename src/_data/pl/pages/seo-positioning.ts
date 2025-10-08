@@ -1,12 +1,12 @@
 import type { ProjectPageData } from '../../types'
 
 export const data: ProjectPageData = {
+  routeKey: 'seo',
   seo: {
-    title: 'Optymalizacja SEO i pozycjonowanie stron www | Marek Chodacki'
+    title: 'Optymalizacja SEO i pozycjonowanie stron www | Marek Chodacki',
   },
-  selectedItem: 'seo-pozycjonowanie',
   h1: 'SEO i Pozycjonowanie',
-  projects:[
+  projects: [
     {
       title: '2021-2025 | Projekty Klientów',
       url: '',
@@ -97,5 +97,5 @@ export const data: ProjectPageData = {
         'Excel & Google Sheets',
       ],
     },
-  ]
+  ],
 }

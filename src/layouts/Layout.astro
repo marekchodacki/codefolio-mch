@@ -1,13 +1,9 @@
 ---
 import Header from '../components/Header.astro'
 import Sidebar from '../components/Sidebar.astro'
+import type { LayoutProps } from '../_data/types'
 
-interface LayoutProps {
-  title: string
-  selectedItem: string
-}
-
-const { title, selectedItem } = Astro.props as LayoutProps
+const { routeKey, title } = Astro.props as LayoutProps
 ---
 
 <!doctype html>
@@ -15,7 +11,7 @@ const { title, selectedItem } = Astro.props as LayoutProps
   <Header title={title} />
   <body>
     <div class="content">
-      <Sidebar selectedItem={selectedItem} />
+      <Sidebar routeKey={routeKey} />
       <slot />
     </div>
     <!--[if lte IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->

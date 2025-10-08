@@ -1,10 +1,10 @@
 import type { ProjectPageData } from '../../types'
 
 export const data: ProjectPageData = {
+  routeKey: 'webapps',
   seo: {
-    title: 'Tworzenie aplikacji webowych | Marek Chodacki'
+    title: 'Tworzenie aplikacji webowych | Marek Chodacki',
   },
-  selectedItem: 'aplikacje-webowe',
   h1: 'Aplikacje webowe',
   projects: [
     {
@@ -39,5 +39,5 @@ export const data: ProjectPageData = {
         'Vercel',
       ],
     },
-  ]
+  ],
 }

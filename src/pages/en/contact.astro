@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import BackButton from '../components/BackButton.astro'
+import Layout from '../../layouts/Layout.astro'
+import BackButton from '../../components/BackButton.astro'
 
-import { data } from '../_data/pl/pages/contact'
+import { data } from '../../_data/en/pages/contact'
 const { seo, routeKey, intro, fields, submit } = data
 ---
 
@@ -13,8 +13,8 @@ const { seo, routeKey, intro, fields, submit } = data
         <BackButton />
       </div>
       <div class="content-container">
-        <h1>{intro.h1}</h1>
-        <section class="contact-container">
+        <h1 set:html={intro.h1} />
+        <secion class="contact-container">
           <h2>{intro.h2}</h2>
           <p class="center pb0">
             {intro.p}
@@ -91,9 +91,9 @@ const { seo, routeKey, intro, fields, submit } = data
   import emailjs from '@emailjs/browser'
   import { z } from 'zod'
   import type { ZodError } from 'zod'
-  import { createClientZodSchema } from '../utils/validation'
-  import { validationMessages } from '../_data/pl/globals/validation'
-  import type { ValidationMessages } from '../_data/types'
+  import { createClientZodSchema } from '../../utils/validation'
+  import { validationMessages } from '../../_data/en/globals/validation'
+  import type { ValidationMessages } from '../../_data/types'
 
   let cleanup: (() => void) | undefined
 
@@ -230,7 +230,7 @@ const { seo, routeKey, intro, fields, submit } = data
               : formData.firstName || formData.lastName || 'Nieznany',
           email: formData.email,
           message: formData.message,
-          toName: 'mch.pl: ',
+          toName: 'mch.en: ',
         }
 
         await emailjs.send(

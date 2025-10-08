@@ -1,9 +1,9 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import BackButton from '../components/BackButton.astro'
-import Project from '../components/Project.astro'
+import Layout from '../../layouts/Layout.astro'
+import BackButton from '../../components/BackButton.astro'
+import Project from '../../components/Project.astro'
 
-import { data } from '../_data/pl/pages/webapps'
+import { data } from '../../_data/en/pages/websites-stores'
 const { seo, routeKey, h1, projects } = data
 ---
 
@@ -14,7 +14,7 @@ const { seo, routeKey, h1, projects } = data
         <BackButton />
       </div>
       <div class="content-container">
-        <h1>{h1}</h1>
+        <h1 set:html={h1} />
         <section class="items-container">
           <div class="resouce-items">
             {

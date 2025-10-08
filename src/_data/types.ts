@@ -2,8 +2,50 @@
  * Shared types
  */
 
+type RouteKey = 'home' | 'webapps' | 'websites' | 'seo' | 'contact'
+
 interface Seo {
   title: string
+}
+
+/**
+ * Layout
+ */
+
+export interface LayoutProps {
+  routeKey: RouteKey
+  title: string
+}
+
+/**
+ * Home page
+ */
+
+interface CallButton {
+  url: string
+  image: string
+  alt: string
+  text: string
+}
+
+interface MailButton {
+  url: string
+  image: string
+  alt: string
+  text: string
+}
+
+export interface HomePageData {
+  routeKey: RouteKey
+  seo?: Seo
+  h1: string
+  p1: string
+  p2: string
+  p3: string
+  p4: string
+  callButton: CallButton
+  mailButton: MailButton
+  projects: Project[]
 }
 
 /**
@@ -14,15 +56,17 @@ interface Project {
   title: string
   url?: string
   rel?: string
+  image?: string
+  alt?: string
   anchor?: string
-  description: string[]
+  description?: string[]
   label: string
   techs: string[]
 }
 
 export interface ProjectPageData {
+  routeKey: RouteKey
   seo?: Seo
-  selectedItem: string
   h1: string
   projects: Project[]
 }
@@ -57,11 +101,38 @@ interface ContactFormSubmit {
 }
 
 export interface ContactPageData {
+  routeKey: RouteKey
   seo?: Seo
-  selectedItem: string
   intro: ContactIntro
   fields: ContactFormField[]
   submit: ContactFormSubmit
+}
+
+/**
+ * Validation
+ */
+
+export type ValidationMessages = {
+  firstName: {
+    invalidChars: string
+    min: string
+    max: string
+  }
+  lastName: {
+    invalidChars: string
+    min: string
+    max: string
+  }
+  email: {
+    required: string
+    invalid: string
+    max: string
+  }
+  message: {
+    required: string
+    min: string
+    max: string
+  }
 }
 
 /**
