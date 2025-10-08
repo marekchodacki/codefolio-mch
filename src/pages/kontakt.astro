@@ -3,11 +3,9 @@ import Layout from '../layouts/Layout.astro'
 import BackButton from '../components/BackButton.astro'
 
 import { data } from '../_data/pl/pages/contact'
-const { seo, selectedItem, intro, fields, submit } = data
 const { seo, routeKey, intro, fields, submit } = data
 ---
 
-<Layout title={seo.title} selectedItem={selectedItem}>
 <Layout title={seo.title} routeKey={routeKey}>
   <nav class="main">
     <div class="container">
@@ -93,237 +91,226 @@ const { seo, routeKey, intro, fields, submit } = data
   import emailjs from '@emailjs/browser'
   import { z } from 'zod'
   import type { ZodError } from 'zod'
-  import { clientZodSchema } from '../utils/validation'
+  import { createClientZodSchema } from '../utils/validation'
+  import { validationMessages } from '../_data/pl/globals/validation'
+  import type { ValidationMessages } from '../_data/types'
 
-  const form = document.getElementById('contact-form') as HTMLFormElement
-  const submitButton = document.getElementById(
-    'submit-button'
-  ) as HTMLButtonElement
-  const buttonText = document.getElementById('button-text') as HTMLSpanElement
-  const buttonLoading = document.getElementById(
-    'button-loading'
-  ) as HTMLSpanElement
-  const successMessage = document.getElementById(
-    'success-message'
-  ) as HTMLDivElement
-  const errorMessageGlobal = document.getElementById(
-    'error-message'
-  ) as HTMLDivElement
+  let cleanup: (() => void) | undefined
 
-  const firstNameInput = document.getElementById(
-    'firstName'
-  ) as HTMLInputElement | null
-  const lastNameInput = document.getElementById(
-    'lastName'
-  ) as HTMLInputElement | null
-  const emailInput = document.getElementById('email') as HTMLInputElement | null
-  const messageInput = document.getElementById(
-    'message'
-  ) as HTMLTextAreaElement | null
-
-  function getFieldSchema(fieldName: string) {
-    const shape = (clientZodSchema as z.ZodObject<any>).shape
-    return shape[fieldName as keyof typeof shape] as z.ZodTypeAny | null
+  const RUNTIME = {  
+    validationMessages: JSON.parse(JSON.stringify(validationMessages)) as ValidationMessages,  
   }
 
-  function clearErrors(): void {
-    const errorElements = document.querySelectorAll('.error-message')
-    errorElements.forEach((el) => {
-      el.textContent = ''
-      ;(el as HTMLElement).style.opacity = '0'
-    })
+  function init(): () => void {
+    const clientZodSchema = createClientZodSchema(RUNTIME.validationMessages)
 
-    if (form) {
-      const inputs = form.querySelectorAll('input, textarea')
-      inputs.forEach((input) => input.classList.remove('error'))
+    const form = document.getElementById('contact-form') as HTMLFormElement | null
+    const submitButton = document.getElementById('submit-button') as HTMLButtonElement | null
+    const buttonText = document.getElementById('button-text') as HTMLSpanElement | null
+    const buttonLoading = document.getElementById('button-loading') as HTMLSpanElement | null
+    const successMessage = document.getElementById('success-message') as HTMLDivElement | null
+    const errorMessageGlobal = document.getElementById('error-message') as HTMLDivElement | null
+
+    const firstNameInput = document.getElementById('firstName') as HTMLInputElement | null
+    const lastNameInput = document.getElementById('lastName') as HTMLInputElement | null
+    const emailInput = document.getElementById('email') as HTMLInputElement | null
+    const messageInput = document.getElementById('message') as HTMLTextAreaElement | null
+
+    if (!form) {
+      return () => {}
     }
 
-    errorMessageGlobal?.classList.add('hidden')
-  }
-
-  function displayErrors(errors: ZodError): void {
-    errors.errors.forEach((error) => {
-      const fieldName = error.path[0] as string
-      const errorElement = document.querySelector(
-        `[data-error="${fieldName}"]`
-      ) as HTMLElement | null
-      const inputElement = document.getElementById(fieldName) as
-        | HTMLInputElement
-        | HTMLTextAreaElement
-        | null
-
-      if (errorElement) {
-        errorElement.textContent = error.message
-        errorElement.style.opacity = '1'
-      }
-      if (inputElement) {
-        inputElement.classList.add('error')
-      }
-    })
-  }
-
-  function validateField(fieldName: string, value: string): boolean {
-    const fieldSchema = getFieldSchema(fieldName)
-    const errorElement = document.querySelector(
-      `[data-error="${fieldName}"]`
-    ) as HTMLElement | null
-    const inputElement = document.getElementById(fieldName) as
-      | HTMLInputElement
-      | HTMLTextAreaElement
-      | null
-
-    if (!fieldSchema) {
-      if (errorElement) {
-        errorElement.textContent = ''
-        errorElement.style.opacity = '0'
-      }
-      inputElement?.classList.remove('error')
-      return true
+    function getFieldSchema(fieldName: string) {
+      const shape = (clientZodSchema as z.ZodObject<any>).shape
+      return shape[fieldName as keyof typeof shape] as z.ZodTypeAny | null
     }
 
-    const result = fieldSchema.safeParse(value)
-
-    if (!result.success) {
-      if (errorElement) {
-        errorElement.textContent = result.error.errors[0].message
-        errorElement.style.opacity = '1'
-      }
-      inputElement?.classList.add('error')
-      return false
-    } else {
-      if (errorElement) {
-        errorElement.textContent = ''
-        errorElement.style.opacity = '0'
-      }
-      inputElement?.classList.remove('error')
-      return true
-    }
-  }
-
-  function resetForm(): void {
-    form?.reset()
-    clearErrors()
-  }
-
-  function setLoadingState(isLoading: boolean): void {
-    if (!submitButton || !buttonText || !buttonLoading) return
-    submitButton.disabled = isLoading
-    if (isLoading) {
-      buttonText.classList.add('hidden')
-      buttonLoading.classList.remove('hidden')
-    } else {
-      buttonText.classList.remove('hidden')
-      buttonLoading.classList.add('hidden')
-    }
-  }
-
-  async function handleSubmit(e: Event): Promise<void> {
-    e.preventDefault()
-    clearErrors()
-
-    const formData = {
-      firstName: firstNameInput?.value.trim() || '',
-      lastName: lastNameInput?.value.trim() || '',
-      email: emailInput?.value.trim() || '',
-      message: messageInput?.value.trim() || '',
-    }
-
-    const parsed = clientZodSchema.safeParse(formData)
-
-    if (!parsed.success) {
-      displayErrors(parsed.error)
-      const firstError = document.querySelector(
-        '.error-message:not(:empty)'
-      ) as HTMLElement | null
-      firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      return
-    }
-
-    setLoadingState(true)
-
-    try {
-      const templateParams = {
-        firstName:
-          formData.firstName && formData.lastName
-            ? `${formData.firstName} ${formData.lastName}`
-            : formData.firstName || formData.lastName || 'Nieznany',
-        email: formData.email,
-        message: formData.message,
-        toName: 'marekchodacki.pl',
-      }
-
-      await emailjs.send(
-        import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,
-        import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        { publicKey: import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY }
-      )
-
-      successMessage?.classList.remove('hidden')
-      successMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      resetForm()
-
-      setTimeout(() => {
-        successMessage?.classList.add('hidden')
-      }, 7000)
-    } catch (error) {
-      console.error('Błąd wysyłania formularza:', error)
-      errorMessageGlobal?.classList.remove('hidden')
-      errorMessageGlobal?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+    function clearErrors(): void {
+      const errorElements = document.querySelectorAll<HTMLElement>('.error-message')
+      errorElements.forEach((el) => {
+        el.textContent = ''
+        el.style.opacity = '0'
       })
-      setTimeout(() => {
-        errorMessageGlobal?.classList.add('hidden')
-      }, 7000)
-    } finally {
-      setLoadingState(false)
-    }
-  }
 
-  if (form) {
+      const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea')
+      inputs.forEach((input) => input.classList.remove('error'))
+
+      errorMessageGlobal?.classList.add('hidden')
+    }
+
+    function displayErrors(errors: ZodError): void {
+      errors.errors.forEach((error) => {
+        const fieldName = error.path[0] as string
+        const errorElement = document.querySelector<HTMLElement>(`[data-error="${fieldName}"]`)
+        const inputElement = document.getElementById(fieldName) as (HTMLInputElement | HTMLTextAreaElement | null)
+
+        if (errorElement) {
+          errorElement.textContent = error.message
+          errorElement.style.opacity = '1'
+        }
+        inputElement?.classList.add('error')
+      })
+    }
+
+    function validateField(fieldName: string, value: string): boolean {
+      const fieldSchema = getFieldSchema(fieldName)
+      const errorElement = document.querySelector<HTMLElement>(`[data-error="${fieldName}"]`)
+      const inputElement = document.getElementById(fieldName) as (HTMLInputElement | HTMLTextAreaElement | null)
+
+      if (!fieldSchema) {
+        if (errorElement) {
+          errorElement.textContent = ''
+          errorElement.style.opacity = '0'
+        }
+        inputElement?.classList.remove('error')
+        return true
+      }
+
+      const result = fieldSchema.safeParse(value)
+      if (!result.success) {
+        if (errorElement) {
+          errorElement.textContent = result.error.errors[0].message
+          errorElement.style.opacity = '1'
+        }
+        inputElement?.classList.add('error')
+        return false
+      } else {
+        if (errorElement) {
+          errorElement.textContent = ''
+          errorElement.style.opacity = '0'
+        }
+        inputElement?.classList.remove('error')
+        return true
+      }
+    }
+
+    function resetForm(): void {
+      form.reset()
+      clearErrors()
+    }
+
+    function setLoadingState(isLoading: boolean): void {
+      if (!submitButton || !buttonText || !buttonLoading) return
+      submitButton.disabled = isLoading
+      if (isLoading) {
+        buttonText.classList.add('hidden')
+        buttonLoading.classList.remove('hidden')
+      } else {
+        buttonText.classList.remove('hidden')
+        buttonLoading.classList.add('hidden')
+      }
+    }
+
+    async function handleSubmit(e: Event): Promise<void> {
+      e.preventDefault()
+      clearErrors()
+
+      const formData = {
+        firstName: firstNameInput?.value.trim() || '',
+        lastName: lastNameInput?.value.trim() || '',
+        email: emailInput?.value.trim() || '',
+        message: messageInput?.value.trim() || '',
+      }
+
+      const parsed = clientZodSchema.safeParse(formData)
+      if (!parsed.success) {
+        displayErrors(parsed.error)
+        const firstError = document.querySelector<HTMLElement>('.error-message:not(:empty)')
+        firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        return
+      }
+
+      setLoadingState(true)
+
+      try {
+        const templateParams = {
+          firstName:
+            formData.firstName && formData.lastName
+              ? `${formData.firstName} ${formData.lastName}`
+              : formData.firstName || formData.lastName || 'Nieznany',
+          email: formData.email,
+          message: formData.message,
+          toName: 'mch.pl: ',
+        }
+
+        await emailjs.send(
+          import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,
+          import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,
+          templateParams,
+          { publicKey: import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY }
+        )
+
+        successMessage?.classList.remove('hidden')
+        successMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        resetForm()
+        setTimeout(() => successMessage?.classList.add('hidden'), 7000)
+      } catch (error) {
+        console.error('Błąd wysyłania formularza:', error)
+        errorMessageGlobal?.classList.remove('hidden')
+        errorMessageGlobal?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        setTimeout(() => errorMessageGlobal?.classList.add('hidden'), 7000)
+      } finally {
+        setLoadingState(false)
+      }
+    }
+
     let isSubmitting = false
-    form.addEventListener('submit', (e) => {
+    function preventDoubleSubmit(e: Event) {
       if (isSubmitting) {
         e.preventDefault()
         return
       }
       isSubmitting = true
-      setTimeout(() => {
-        isSubmitting = false
-      }, 2000)
-    })
+      setTimeout(() => { isSubmitting = false }, 2000)
+    }
+
+    form.addEventListener('submit', preventDoubleSubmit)
     form.addEventListener('submit', handleSubmit)
-  }
 
-  const inputs = [
-    firstNameInput,
-    lastNameInput,
-    emailInput,
-    messageInput,
-  ].filter(Boolean) as Array<HTMLInputElement | HTMLTextAreaElement>
+    const inputs = [firstNameInput, lastNameInput, emailInput, messageInput].filter(Boolean) as Array<HTMLInputElement | HTMLTextAreaElement>
 
-  inputs.forEach((input) => {
-    input.addEventListener('blur', () => {
-      const fieldName = input.getAttribute('name')
+    function onBlur(this: HTMLInputElement | HTMLTextAreaElement) {
+      const fieldName = this.getAttribute('name')
       if (!fieldName) return
-      const value = input.value.trim()
-      if (value || input.hasAttribute('required')) {
+      const value = this.value.trim()
+      if (value || this.hasAttribute('required')) {
         validateField(fieldName, value)
       }
-    })
+    }
 
-    input.addEventListener('input', () => {
-      const fieldName = input.getAttribute('name')
+    function onInput(this: HTMLInputElement | HTMLTextAreaElement) {
+      const fieldName = this.getAttribute('name')
       if (!fieldName) return
-      const errorElement = document.querySelector(
-        `[data-error="${fieldName}"]`
-      ) as HTMLElement | null
+      const errorElement = document.querySelector<HTMLElement>(`[data-error="${fieldName}"]`)
       if (errorElement && errorElement.textContent) {
         errorElement.textContent = ''
         errorElement.style.opacity = '0'
-        input.classList.remove('error')
+        this.classList.remove('error')
       }
+    }
+
+    inputs.forEach((input) => {
+      input.addEventListener('blur', onBlur)
+      input.addEventListener('input', onInput)
     })
+
+    return () => {
+      form.removeEventListener('submit', preventDoubleSubmit)
+      form.removeEventListener('submit', handleSubmit)
+      inputs.forEach((input) => {
+        input.removeEventListener('blur', onBlur)
+        input.removeEventListener('input', onInput)
+      })
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    if (cleanup) cleanup()
+    cleanup = init()
+  })
+
+  document.addEventListener('astro:before-swap', () => {
+    if (cleanup) cleanup()
+    cleanup = undefined
   })
 </script>
