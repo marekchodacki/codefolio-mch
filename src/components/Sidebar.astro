@@ -1,9 +1,30 @@
 ---
-import { data } from '../_data/pl/globals/navigation'
+import { data as dataPL } from '../_data/pl/globals/navigation'
+import { data as dataEN } from '../_data/en/globals/navigation'
 import type { LayoutProps } from '../_data/types'
+
 const { routeKey } = Astro.props as LayoutProps
+const locale = Astro.currentLocale ?? 'pl'
+const isEN = locale === 'en'
+const data = isEN ? dataEN : dataPL
 const { niv, nav } = data
 
+function hrefFor(locale: string, localUrl: string) {
+  if (localUrl === '/') return locale === 'pl' ? '/' : '/en/'
+  return locale === 'pl' ? localUrl : `/en${localUrl}`
+}
+
+function switchHref(targetLocale: 'pl' | 'en', currentSlug: string) {
+  const source = targetLocale === 'en' ? dataEN : dataPL
+  const item = source.nav.find((i) => i.slug === currentSlug)
+  const localUrl = item?.url ?? '/'
+  return hrefFor(targetLocale, localUrl)
+}
+
+const langIcon = isEN ? '/assets/icons/nav_pl.svg' : '/assets/icons/nav_en.svg'
+const langLabel = isEN ? 'Polski' : 'English'
+const langHreflang = isEN ? 'pl' : 'en'
+const switchUrl = switchHref(isEN ? 'pl' : 'en', routeKey)
 ---
 
 <aside
@@ -16,7 +37,7 @@ const { niv, nav } = data
   class="sidebar w-nav"
 >
   <div class="nav-content">
-    <a href={niv.url} class="w-nav-brand" aria-label="home">
+    <a href={hrefFor(locale, niv.url)} class="w-nav-brand" aria-label="home">
       <div class="niv-data">
         <img src={niv.image} loading="eager" alt={niv.alt} class="niv-image" />
         <div>
@@ -30,7 +51,7 @@ const { niv, nav } = data
       {
         nav.map((item) => (
           <a
-            href={item.url}
+            href={hrefFor(locale, item.url)}
             class={`nav-link-container w-inline-block ${
               routeKey === item.slug ? 'w--current' : ''
             }`}
@@ -45,6 +66,40 @@ const { niv, nav } = data
           </a>
         ))
       }
+
+      <div
+        class="nav-lang-switcher"
+        role="group"
+        aria-label="Language switcher"
+      >
+        {
+          (
+            <div
+              class="nav-lang-switcher"
+              role="group"
+              aria-label="Language switcher"
+            >
+              <a
+                href={switchUrl}
+                hreflang={langHreflang}
+                lang={langHreflang}
+                aria-label={isEN ? 'Przełącz na polski' : 'Switch to English'}
+                class="lang-link"
+              >
+                <img
+                  src={langIcon}
+                  alt={langLabel}
+                  class="lang-flag"
+                  width="20"
+                  height="20"
+                  loading="eager"
+                />
+                <span class="lang-code">{langLabel}</span>
+              </a>
+            </div>
+          )
+        }
+      </div>
     </nav>
 
     <div
