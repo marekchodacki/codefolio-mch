@@ -1,8 +1,9 @@
 ---
 import { data } from '../_data/pl/globals/navigation'
+import type { LayoutProps } from '../_data/types'
+const { routeKey } = Astro.props as LayoutProps
 const { niv, nav } = data
 
-const { selectedItem } = Astro.props
 ---
 
 <aside
@@ -31,7 +32,7 @@ const { selectedItem } = Astro.props
           <a
             href={item.url}
             class={`nav-link-container w-inline-block ${
-              selectedItem === item.slug ? 'w--current' : ''
+              routeKey === item.slug ? 'w--current' : ''
             }`}
           >
             <img

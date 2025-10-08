@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Signature from '../components/Signature.astro'
+
+const { routeKey, seo, p1, p2, p3, p4, callButton, mailButton, projects } = data
 ---
 
 <Layout
   title="Marek Chodacki | Programista Fullstack"
   selectedItem="strona-glowna"
 >
+<Layout title={seo.title} routeKey={routeKey}>
   <nav class="main">
     <div class="container">
       <main class="fold-content-container">

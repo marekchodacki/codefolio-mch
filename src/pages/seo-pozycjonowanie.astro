@@ -4,10 +4,10 @@ import BackButton from '../components/BackButton.astro'
 import Project from '../components/Project.astro'
 
 import { data } from '../_data/pl/pages/seo-positioning'
-const { seo, selectedItem, h1, projects } = data
+const { seo, routeKey, h1, projects } = data
 ---
 
-<Layout title={seo.title} selectedItem={selectedItem}>
+<Layout title={seo.title} routeKey={routeKey}>
   <nav class="main">
     <div class="container">
       <div class="back-nav-container">
