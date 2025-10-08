@@ -1,0 +1,84 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Signature from '../../components/Signature.astro'
+
+import { data } from '../../_data/en/pages/index'
+const { routeKey, seo, p1, p2, p3, p4, callButton, mailButton, projects } = data
+
+const h1 = data.h1.split(' | ')
+---
+
+<Layout title={seo.title} routeKey={routeKey}>
+  <nav class="main">
+    <div class="container">
+      <main class="fold-content-container">
+        <div class="fold-content">
+          <h1>
+            <span class="line">{h1[0]}</span>
+            <span class="line center">{h1[1]}</span>
+            <span class="line right">
+              <span class="underline bold-500">{h1[2]}</span>
+            </span>
+          </h1>
+          <p class="lead mobile-hidden" set:html={p1} />
+          <p class="lead center mobile-hidden" set:html={p2} />
+          <p class="lead right" set:html={p3} />
+          <p class="lead right bold-600" set:html={p4} />
+        </div>
+        <div class="svg-wrapper">
+          <Signature />
+        </div>
+        <div class="home-buttons">
+          <a href={callButton.url} class="button w-button">
+            <img
+              src={callButton.image}
+              loading="lazy"
+              alt={callButton.alt}
+              class="icon"
+            />{callButton.text}</a
+          >
+          <a href={mailButton.url} class="button w-button">
+            <img
+              src={mailButton.image}
+              loading="lazy"
+              alt={mailButton.alt}
+              class="icon"
+            />{mailButton.text}</a
+          >
+        </div>
+      </main>
+      <div class="projects-section">
+        {
+          projects.map((project) => (
+            <a href={project.url} class="projects-container">
+              <div class="single-projects-category">
+                <div class="projects-category-image-container">
+                  <img
+                    src={project.image}
+                    loading="lazy"
+                    alt={project.alt}
+                    class="projects-category-image"
+                  />
+                </div>
+              </div>
+              <div class="single-projects-content">
+                <h4 set:html={project.title} />
+                <div class="tech-tools-container">
+                  <div
+                    class="mini-label-white gray-color"
+                    set:html={project.label}
+                  />
+                  <div class="chips-container chips-container-small-width">
+                    {project.techs.map((tech) => (
+                      <div class="single-chip small-chip">{tech}</div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </nav>
+</Layout>

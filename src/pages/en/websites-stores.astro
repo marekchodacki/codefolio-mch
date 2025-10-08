@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import BackButton from '../../components/BackButton.astro'
+import Project from '../../components/Project.astro'
+
+import { data } from '../../_data/en/pages/websites-stores'
+const { seo, routeKey, h1, projects } = data
+---
+
+<Layout title={seo.title} routeKey={routeKey}>
+  <nav class="main">
+    <div class="container">
+      <div class="back-nav-container">
+        <BackButton />
+      </div>
+      <div class="content-container">
+        <h1 set:html={h1} />
+        <section class="items-container">
+          <div class="resouce-items">
+            {
+              projects.map((project) => (
+                <Project
+                  title={project.title}
+                  url={project.url}
+                  rel={project.rel}
+                  anchor={project.anchor}
+                  description={project.description}
+                  label={project.label}
+                  techs={project.techs}
+                />
+              ))
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+  </nav>
+</Layout>
