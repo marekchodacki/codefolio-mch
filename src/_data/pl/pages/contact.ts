@@ -1,15 +1,15 @@
 import type { ContactPageData } from '../../types'
 
 export const data: ContactPageData = {
+  routeKey: 'contact',
   seo: {
-    title: 'Kontakt i współpraca | Marek Chodacki'
+    title: 'Kontakt i współpraca | Marek Chodacki',
   },
-  selectedItem: 'kontakt',
   intro: {
     h1: 'Kontakt',
     h2: 'Masz pomysł?',
     p: 'Zaprojektuję dla Ciebie stronę, aplikację lub sklep internetowy.',
-    chip: 'Dostępny do współpracy'
+    chip: 'Dostępny do współpracy',
   },
   fields: [
     {
@@ -48,7 +48,8 @@ export const data: ContactPageData = {
   submit: {
     btnText: 'Wyślij',
     btnLoadingText: 'Wysyłanie...',
-    messageSuccess: '✓ Formularz został poprawnie wysłany! Dziękuję bardzo za kontakt.',
-    messageError: '✗ Wystąpił błąd podczas wysyłania. Spróbuj ponownie.'
-  }
+    messageSuccess:
+      '✓ Formularz został poprawnie wysłany! Dziękuję bardzo za kontakt.',
+    messageError: '✗ Wystąpił błąd podczas wysyłania. Spróbuj ponownie.',
+  },
 }

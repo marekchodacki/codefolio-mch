@@ -1,11 +1,11 @@
 import type { ProjectPageData } from '../../types'
 
 export const data: ProjectPageData = {
+  routeKey: 'websites',
   seo: {
-    title: 'Projektowanie stron www i sklepów internetowych | Marek Chodacki'
+    title: 'Projektowanie stron www i sklepów internetowych | Marek Chodacki',
   },
-  selectedItem: 'strony-sklepy',
-  h1: "Strony i Sklepy",
+  h1: 'Strony i Sklepy',
   projects: [
     {
       title: '2025 | Winnica Koniczynowe Wzgórze | Puławy',
@@ -119,5 +119,5 @@ export const data: ProjectPageData = {
       label: 'Technologie i&nbsp;narzędzia',
       techs: ['WordPress', 'WooCommerce', 'Unero', 'PHP', 'MySQL', 'Photoshop'],
     },
-  ]
+  ],
 }
