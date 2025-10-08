@@ -1,35 +1,60 @@
-<div id="back-button" class="back-nav-container">
-  <a href="/" class="back-nav-button w-inline-block"
-    ><img
+---
+const locale = Astro.currentLocale ?? 'pl'
+const homeUrl = locale === 'pl' ? '/' : '/en/'
+const backLabel = locale === 'pl' ? 'Wstecz' : 'Back'
+---
+
+<div id="back-button" class="back-nav-container" data-home-url={homeUrl}>
+  <a href={homeUrl} class="back-nav-button w-inline-block">
+    <img
       src="/assets/icons/btn_back.svg"
       loading="lazy"
-      alt="Wstecz"
+      alt={backLabel}
       class="back-nav-img"
     />
-    <div>Wstecz</div></a
-  >
+    <div>{backLabel}</div>
+  </a>
 </div>
 
 <script>
   import { navigate } from 'astro:transitions/client'
 
-  function handleBackClick(event: Event): void {
-    event.preventDefault()
+  function getHomeUrl() {
+    const root = document.getElementById('back-button')
+    return root?.getAttribute('data-home-url') || '/'
+  }
 
-    const isInternalReferrer = document.referrer.includes(window.location.host)
-
-    if (window.history.length > 1 && isInternalReferrer) {
-      window.history.back()
-    } else {
-      navigate('/')
+  function isInternalReferrer() {
+    try {
+      const ref = document.referrer
+      if (!ref) return false
+      const { host } = new URL(ref)
+      return host === window.location.host
+    } catch {
+      return false
     }
   }
 
-  function setupBackButton(): void {
-    const backButton = document.getElementById('back-button') as HTMLElement
-    if (backButton) {
-      backButton.addEventListener('click', handleBackClick)
+  function handleBackClick(event) {
+    const target = event.target
+    const anchor = target?.closest('a.back-nav-button')
+    if (!anchor) return
+    event.preventDefault()
+
+    const homeUrl = getHomeUrl()
+
+    if (window.history.length > 1 && isInternalReferrer()) {
+      window.history.back()
+    } else {
+      navigate(homeUrl)
     }
+  }
+
+  function setupBackButton() {
+    const container = document.getElementById('back-button')
+    if (!container) return
+    container.removeEventListener('click', handleBackClick)
+    container.addEventListener('click', handleBackClick)
   }
 
   document.addEventListener('DOMContentLoaded', setupBackButton)
