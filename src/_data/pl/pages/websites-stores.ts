@@ -8,6 +8,27 @@ export const data: ProjectPageData = {
   h1: 'Strony i Sklepy',
   projects: [
     {
+      title: '2026 | SPATIUM Kreacja Przestrzeni | Radom',
+      url: 'https://spatiumkreacja.pl/',
+      rel: 'noopener noreferrer nofollow',
+      anchor: 'Zobacz stronę',
+      description: [
+        'Zaprojektowanie nowej odsłony witryny, zastępując poprzedni, autorski system CMS nowoczesną architekturą WordPress (Astra + Elementor)',
+        'Stworzenie minimalistycznej, eleganckiej i przejrzystej szaty graficznej, podkreślającej profesjonalizm biura projektowego i zapewniającej pełną responsywność (RWD)',
+        'Wdrożenie zaawansowanego formularza briefu online, usprawniającego proces zbierania wytycznych projektowych i komunikację z klientem',
+        'Bezpieczna migracja zasobów ze starej bazy danych, konfiguracja hostingu oraz wdrożenie procedur backupu i optymalizacji wydajności',
+      ],
+      label: 'Technologie i&nbsp;narzędzia',
+      techs: [
+        'WordPress',
+        'Astra',
+        'Elementor',
+        'Responsive Design',
+        'Database Migration',
+        'UX/UI',
+      ],
+    },
+    {
       title: '2025 | Winnica Koniczynowe Wzgórze | Puławy',
       rel: 'noopener noreferrer nofollow',
       description: [
