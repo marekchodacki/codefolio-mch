@@ -14,10 +14,10 @@ const h1 = data.h1.split(' | ')
       <main class="fold-content-container">
         <div class="fold-content">
           <h1>
-            <span class="line">{h1[0]}</span>
-            <span class="line center">{h1[1]}</span>
+            <span class="line"><small>{h1[0]}</small></span>
+            <span class="line center"><small>{h1[1]}</small></span>
             <span class="line right">
-              <span class="underline bold-500">{h1[2]}</span>
+              <span class="underline bold-500"><small>{h1[2]}</small></span>
             </span>
           </h1>
           <p class="lead mobile-hidden" set:html={p1} />
