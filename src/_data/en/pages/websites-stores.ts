@@ -129,7 +129,7 @@ export const data: ProjectPageData = {
     },
     {
       title: '2021 | ClubGarden | Radom',
-      url: 'https://clubgarden.pl/',
+      url: 'https://www.facebook.com/clubgardenpoland/',
       rel: 'noopener noreferrer nofollow',
       anchor: 'View store',
       description: [
